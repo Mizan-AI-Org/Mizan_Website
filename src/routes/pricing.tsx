@@ -17,81 +17,78 @@ export default function Pricing() {
   const plans = [
     {
       name: 'Starter',
-      description: 'Perfect for single-location restaurants',
-      basePrice: 79,
-      pricePerEmployee: 2,
-      maxEmployees: 30,
+      description: 'Perfect for single-location restaurants getting started',
+      monthlyPrice: 99,
+      annualPrice: 89,
+      maxEmployees: 15,
+      employeeLabel: 'Up to 15 employees',
       features: [
-        'Smart scheduling',
-        'WhatsApp integration',
-        'Basic analytics',
-        'Mobile apps',
-        'Email support',
-        'Up to 30 employees',
+        'AI-Powered Scheduling',
+        'Employee Availability & Time-Off',
+        'Basic Labor Cost Tracking',
+        'Mobile App for Staff',
+        'Shift Swaps & Covers',
+        'Email & SMS Notifications',
+        'Email Support (48-hour response)',
       ],
       notIncluded: [
-        'Multi-location support',
-        'Advanced analytics',
-        'Custom integrations',
-        'Dedicated account manager',
+        'Advanced Labor Analytics',
+        'Multi-Location Dashboard',
+        'API Access',
+        'Priority Support',
       ],
       recommended: false,
     },
     {
-      name: 'Professional',
-      description: 'For growing restaurant businesses',
-      basePrice: 149,
-      pricePerEmployee: 3,
-      maxEmployees: 100,
+      name: 'Pro',
+      description: 'For growing restaurants that need insights and control',
+      monthlyPrice: 189,
+      annualPrice: 169,
+      maxEmployees: 50,
+      employeeLabel: 'Up to 50 employees',
       features: [
-        'Everything in Starter',
-        'Advanced analytics & reports',
-        'Performance tracking',
-        'Labor cost optimization',
-        'Priority support',
-        'Up to 100 employees',
-        'API access',
-        'Custom reporting',
+        'Everything in Essential',
+        'Advanced Labor Analytics',
+        'Performance & Sales Integration',
+        'Forecast-Based Scheduling',
+        'Multi-Location Dashboard (up to 3)',
+        'Advanced Compliance',
+        'Priority Support (24-hour response)',
+        'API Access (Toast, Square, etc.)',
       ],
       notIncluded: [
-        'Multi-location support',
-        'Dedicated account manager',
+        'Unlimited Locations',
+        'Dedicated Account Manager',
       ],
       recommended: true,
     },
     {
       name: 'Enterprise',
-      description: 'For multi-location operators',
-      basePrice: null,
-      pricePerEmployee: null,
+      description: 'For multi-location restaurant groups & franchises',
+      monthlyPrice: null,
+      annualPrice: null,
       maxEmployees: null,
+      employeeLabel: 'Unlimited employees & locations',
       features: [
-        'Everything in Professional',
-        'Multi-location management',
-        'Consolidated reporting',
-        'Custom integrations',
-        'Dedicated account manager',
+        'Everything in Pro',
+        'Unlimited Locations',
         'Unlimited employees',
-        'SLA guarantee',
-        'Custom training',
-        'Advanced security',
+        'Consolidated Group Reporting',
+        'Custom Integrations',
+        'Dedicated Account Manager',
+        'Custom Training & Onboarding',
+        'SLA Guarantee (99.9% uptime)',
+        'Advanced Security & SSO',
       ],
       notIncluded: [],
       recommended: false,
     },
   ];
 
-  const calculatePrice = (plan: typeof plans[0]) => {
-    if (plan.basePrice === null) return null;
-    
-    const employees = Math.min(employeeCount, plan.maxEmployees || employeeCount);
-    const monthlyPrice = plan.basePrice + (employees * plan.pricePerEmployee);
-    
-    if (billingCycle === 'annual') {
-      return Math.floor(monthlyPrice * 12 * 0.85); // 15% discount
-    }
-    
-    return monthlyPrice;
+
+  const getPrice = (plan: typeof plans[0]) => {
+    if (plan.monthlyPrice === null) return null;
+    return billingCycle === 'annual' ? plan.annualPrice : plan.monthlyPrice;
   };
 
   const faqs = [
@@ -151,21 +148,19 @@ export default function Pricing() {
             <div className="inline-flex items-center bg-white rounded-lg p-1 shadow-sm">
               <button
                 onClick={() => setBillingCycle('monthly')}
-                className={`px-6 py-2 rounded-md transition-colors ${
-                  billingCycle === 'monthly'
-                    ? 'bg-primary-600 text-white'
-                    : 'text-neutral-600 hover:text-neutral-900'
-                }`}
+                className={`px-6 py-2 rounded-md transition-colors ${billingCycle === 'monthly'
+                  ? 'bg-primary-600 text-white'
+                  : 'text-neutral-600 hover:text-neutral-900'
+                  }`}
               >
                 Monthly
               </button>
               <button
                 onClick={() => setBillingCycle('annual')}
-                className={`px-6 py-2 rounded-md transition-colors ${
-                  billingCycle === 'annual'
-                    ? 'bg-primary-600 text-white'
-                    : 'text-neutral-600 hover:text-neutral-900'
-                }`}
+                className={`px-6 py-2 rounded-md transition-colors ${billingCycle === 'annual'
+                  ? 'bg-primary-600 text-white'
+                  : 'text-neutral-600 hover:text-neutral-900'
+                  }`}
               >
                 Annual
                 <span className="ml-2 text-xs bg-secondary-100 text-secondary-700 px-2 py-1 rounded">
@@ -178,33 +173,74 @@ export default function Pricing() {
       </section>
 
       {/* Pricing Calculator */}
-      <section className="section-padding-sm bg-white">
+      <section className="pt-3 pb-5 bg-white">
         <div className="container-custom">
-          <div className="max-w-2xl mx-auto mb-16">
+          <div className="max-w-2xl mx-auto mb-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-neutral-50 rounded-2xl p-8"
+              className="bg-neutral-50 rounded-2xl p-6"
             >
               <h3 className="text-neutral-900 mb-6 text-center">How many employees do you have?</h3>
-              
-              <div className="space-y-4">
-                <input
-                  type="range"
-                  min="5"
-                  max="150"
-                  value={employeeCount}
-                  onChange={(e) => setEmployeeCount(parseInt(e.target.value))}
-                  className="w-full h-2 bg-primary-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
-                />
-                
+
+              <div className="space-y-2">
+                <div className="relative py-2">
+                  <input
+                    type="range"
+                    min="10"
+                    max="200"
+                    value={employeeCount}
+                    onChange={(e) => setEmployeeCount(parseInt(e.target.value))}
+                    className="w-full h-3 rounded-full appearance-none cursor-pointer slider-track"
+                    style={{
+                      background: `linear-gradient(to right, #10B981 0%, #10B981 ${((employeeCount - 10) / 190) * 100}%, #E5E7EB ${((employeeCount - 10) / 190) * 100}%, #E5E7EB 100%)`
+                    }}
+                  />
+                  <style>{`
+                    .slider-track::-webkit-slider-thumb {
+                      -webkit-appearance: none;
+                      appearance: none;
+                      width: 28px;
+                      height: 28px;
+                      border-radius: 50%;
+                      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+                      cursor: pointer;
+                      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1);
+                      border: 3px solid white;
+                      transition: transform 0.2s ease, box-shadow 0.2s ease;
+                    }
+                    .slider-track::-webkit-slider-thumb:hover {
+                      transform: scale(1.1);
+                      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5), 0 3px 6px rgba(0, 0, 0, 0.15);
+                    }
+                    .slider-track::-moz-range-thumb {
+                      width: 28px;
+                      height: 28px;
+                      border-radius: 50%;
+                      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+                      cursor: pointer;
+                      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1);
+                      border: 3px solid white;
+                      transition: transform 0.2s ease, box-shadow 0.2s ease;
+                    }
+                    .slider-track::-moz-range-thumb:hover {
+                      transform: scale(1.1);
+                      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5), 0 3px 6px rgba(0, 0, 0, 0.15);
+                    }
+                  `}</style>
+                </div>
+
                 <div className="text-center">
                   <div className="text-4xl font-bold text-primary-600 mb-2">
                     {employeeCount} employees
                   </div>
                   <p className="text-neutral-600">
-                    Slide to estimate your monthly cost
+                    {employeeCount <= 15
+                      ? '→ Starter Plan ($99/mo)'
+                      : employeeCount <= 50
+                        ? '→ Pro Plan ($189/mo)'
+                        : '→ Enterprise Plan (Custom pricing)'}
                   </p>
                 </div>
               </div>
@@ -214,7 +250,7 @@ export default function Pricing() {
           {/* Pricing Cards */}
           <div className="grid md:grid-cols-3 gap-8">
             {plans.map((plan, index) => {
-              const price = calculatePrice(plan);
+              const price = getPrice(plan);
               const isRecommended = plan.recommended;
 
               return (
@@ -224,21 +260,20 @@ export default function Pricing() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className={`bg-white rounded-2xl p-8 relative ${
-                    isRecommended
-                      ? 'border-2 border-primary-600 shadow-xl'
-                      : 'border border-neutral-200'
-                  }`}
+                  className={`bg-white rounded-2xl p-8 relative ${isRecommended
+                    ? 'border-2 border-primary-600 shadow-xl'
+                    : 'border border-neutral-200'
+                    }`}
                 >
                   {isRecommended && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-600 text-white px-4 py-1 rounded-full text-sm">
-                      Most Popular
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-600 text-white px-4 py-1 rounded-full text-sm font-medium">
+                      ⭐ Most Popular
                     </div>
                   )}
 
                   <div className="mb-6">
                     <h3 className="text-neutral-900 mb-2">{plan.name}</h3>
-                    <p className="text-neutral-600">{plan.description}</p>
+                    <p className="text-neutral-600 text-sm">{plan.description}</p>
                   </div>
 
                   <div className="mb-6">
@@ -246,17 +281,17 @@ export default function Pricing() {
                       <>
                         <div className="flex items-baseline">
                           <span className="text-5xl font-bold text-neutral-900">
-                            ${billingCycle === 'annual' ? Math.floor(price / 12) : price}
+                            ${price}
                           </span>
                           <span className="text-neutral-600 ml-2">/month</span>
                         </div>
                         {billingCycle === 'annual' && (
                           <p className="text-sm text-neutral-500 mt-2">
-                            ${price}/year (billed annually)
+                            Billed annually
                           </p>
                         )}
-                        <p className="text-sm text-neutral-500 mt-2">
-                          For {employeeCount <= (plan.maxEmployees || 999) ? employeeCount : plan.maxEmployees} employees
+                        <p className="text-sm text-primary-600 font-medium mt-2">
+                          {plan.employeeLabel}
                         </p>
                       </>
                     ) : (
@@ -264,8 +299,11 @@ export default function Pricing() {
                         <div className="text-3xl font-bold text-neutral-900 mb-2">
                           Custom Pricing
                         </div>
-                        <p className="text-neutral-600">
-                          Tailored to your needs
+                        <p className="text-neutral-600 text-sm">
+                          Tailored to your operations
+                        </p>
+                        <p className="text-sm text-primary-600 font-medium mt-2">
+                          {plan.employeeLabel}
                         </p>
                       </div>
                     )}
@@ -273,11 +311,10 @@ export default function Pricing() {
 
                   <a
                     href="#contact"
-                    className={`w-full block text-center py-3 rounded-lg transition-colors mb-6 ${
-                      isRecommended
-                        ? 'bg-primary-600 text-white hover:bg-primary-700'
-                        : 'border-2 border-neutral-300 text-neutral-900 hover:border-primary-600'
-                    }`}
+                    className={`w-full block text-center py-3 rounded-lg transition-colors mb-6 ${isRecommended
+                      ? 'bg-primary-600 text-white hover:bg-primary-700'
+                      : 'border-2 border-neutral-300 text-neutral-900 hover:border-primary-600'
+                      }`}
                   >
                     {price !== null ? 'Start Free Trial' : 'Contact Sales'}
                   </a>
@@ -306,28 +343,28 @@ export default function Pricing() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-16 bg-neutral-50 rounded-2xl p-8"
+            className="mt-12 bg-neutral-50 rounded-2xl p-8"
           >
             <h3 className="text-neutral-900 mb-6 text-center">Not sure which plan is right for you?</h3>
-            
+
             <div className="grid md:grid-cols-3 gap-6 text-center">
               <div>
                 <div className="text-2xl mb-2">🍽️</div>
-                <h4 className="text-neutral-900 mb-2">Single Location</h4>
-                <p className="text-neutral-600 mb-3">Under 30 employees</p>
-                <p className="text-primary-600">→ Starter Plan</p>
+                <h4 className="text-neutral-900 mb-2">Small Restaurant</h4>
+                <p className="text-neutral-600 mb-3">Up to 15 employees</p>
+                <p className="text-primary-600 font-medium">→ Essential Plan</p>
               </div>
               <div>
                 <div className="text-2xl mb-2">🏪</div>
                 <h4 className="text-neutral-900 mb-2">Growing Business</h4>
-                <p className="text-neutral-600 mb-3">30-100 employees</p>
-                <p className="text-primary-600">→ Professional Plan</p>
+                <p className="text-neutral-600 mb-3">Up to 50 employees</p>
+                <p className="text-primary-600 font-medium">→ Professional Plan</p>
               </div>
               <div>
                 <div className="text-2xl mb-2">🏢</div>
-                <h4 className="text-neutral-900 mb-2">Multi-Location</h4>
-                <p className="text-neutral-600 mb-3">100+ employees</p>
-                <p className="text-primary-600">→ Enterprise Plan</p>
+                <h4 className="text-neutral-900 mb-2">Restaurant Groups</h4>
+                <p className="text-neutral-600 mb-3">50+ employees or multi-location</p>
+                <p className="text-primary-600 font-medium">→ Enterprise Plan</p>
               </div>
             </div>
           </motion.div>
@@ -398,7 +435,7 @@ export default function Pricing() {
             <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
               Start your 14-day free trial today. No credit card required.
             </p>
-            
+
             <a
               href="#contact"
               className="inline-flex items-center space-x-2 bg-white text-primary-600 px-8 py-4 rounded-lg hover:bg-neutral-100 transition-colors"

@@ -19,7 +19,7 @@ export default function Contact() {
       <Navigation />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-br from-neutral-50 to-primary-50/30">
+      <section className="pt-32 pb-20 md:pt-40 md:pb-25 bg-gradient-to-br from-neutral-50 to-primary-50/30">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -44,7 +44,7 @@ export default function Contact() {
               transition={{ delay: 0.2 }}
             >
               <h2 className="text-neutral-900 mb-6">Get in touch</h2>
-              
+
               <form className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -151,7 +151,7 @@ export default function Contact() {
             >
               <div>
                 <h3 className="text-neutral-900 mb-6">Contact Information</h3>
-                
+
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4">
                     <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -159,8 +159,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <h4 className="text-neutral-900 mb-1">Email</h4>
-                      <p className="text-neutral-600">sales@mizan.ai</p>
-                      <p className="text-neutral-600">support@mizan.ai</p>
+                      <p className="text-neutral-600">sales@heymizan.ai</p>
+                      <p className="text-neutral-600">support@heymizan.ai</p>
                     </div>
                   </div>
 
@@ -170,7 +170,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h4 className="text-neutral-900 mb-1">Phone</h4>
-                      <p className="text-neutral-600">+1 (555) 123-4567</p>
+                      <p className="text-neutral-600">+212 784476751</p>
                       <p className="text-sm text-neutral-500">Mon-Fri, 9am-6pm EST</p>
                     </div>
                   </div>
@@ -182,9 +182,7 @@ export default function Contact() {
                     <div>
                       <h4 className="text-neutral-900 mb-1">Office</h4>
                       <p className="text-neutral-600">
-                        123 Tech Boulevard<br />
-                        San Francisco, CA 94102<br />
-                        United States
+                        Marrakech, Morocco
                       </p>
                     </div>
                   </div>
