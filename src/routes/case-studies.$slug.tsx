@@ -98,7 +98,7 @@ Within the first month, the system had paid for itself through labor cost saving
       title: 'Coastal Kitchen',
       category: 'Fine Dining',
       tagline: 'Fine dining restaurant improves team satisfaction and reduces turnover',
-      hero: 'https://images.unsplash.com/photo-1762113246607-4299ec3f3214?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwa2l0Y2hlbiUyMHRlYW18ZW58MXx8fHwxNzYzNjE3Nzc2fDA&ixlib=rb-4.1.0&q=80&w=1080',
+      hero: 'https://unsplash.com/photos/3d-render-of-luxury-restaurant-interior-V9CVO_cv-78',
       stats: [
         { label: 'Staff Turnover Reduction', value: '45%', icon: Users },
         { label: 'Guest Satisfaction', value: '92%', icon: TrendingUp },
@@ -320,7 +320,7 @@ Marcus also used Mizan's performance tracking to identify and recognize top perf
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-neutral-900 mb-12 text-center">{study.results.title}</h2>
-            
+
             <div className="space-y-6">
               {study.results.metrics.map((metric: any, index: number) => (
                 <motion.div
@@ -381,7 +381,7 @@ Marcus also used Mizan's performance tracking to identify and recognize top perf
             <p className="text-xl text-neutral-600 mb-8">
               See how Mizan can help you achieve similar results
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/contact"

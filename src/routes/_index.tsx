@@ -42,21 +42,21 @@ export default function Index() {
   const testimonials = [
     {
       quote: "Mizan completely transformed how we manage our three locations. What used to take hours now takes minutes.",
-      author: "Sarah Chen",
-      role: "Owner, Urban Bistro Group",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400"
+      author: "Hamza Hadni",
+      role: "Owner, Barometře, Marrakesh",
+      image: ""
     },
     {
       quote: "Our staff turnover dropped by 40% since implementing Mizan. The team loves the WhatsApp integration.",
-      author: "Marcus Rodriguez",
+      author: "Mohammed Al-Habib",
       role: "General Manager, Coastal Kitchen",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400"
+      image: ""
     },
     {
       quote: "The performance insights helped us identify and fix issues we didn't even know existed. ROI in the first month.",
-      author: "Jennifer Park",
-      role: "Operations Director, Quick Serve Co.",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400"
+      author: "Ali Haidar",
+      role: "General Manager, Ima Restaurant, Benguerir",
+      image: ""
     },
   ];
 
@@ -131,7 +131,7 @@ export default function Index() {
             >
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1489925461942-d8f490a04588?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWFuYWdlciUyMHRhYmxldCUyMHRlY2hub2xvZ3l8ZW58MXx8fHwxNzYzNzM1OTc2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+                  src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Restaurant manager using Mizan on tablet"
                   className="w-full h-auto"
                 />
@@ -276,8 +276,8 @@ export default function Index() {
               className="relative"
             >
               <ImageWithFallback
-                src="https://images.unsplash.com/photo-1762113246607-4299ec3f3214?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwc3RhZmYlMjB0ZWFtJTIwc2VydmljZXxlbnwxfHx8fDE3NjM3MzU5NzZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="Restaurant staff team working together"
+              src='https://plus.unsplash.com/premium_photo-1661883237884-263e8de8869b?q=80&w=2089&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+              alt="Restaurant staff team working together"
                 className="rounded-2xl shadow-2xl w-full"
               />
             </motion.div>
