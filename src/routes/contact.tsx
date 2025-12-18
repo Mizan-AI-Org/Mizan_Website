@@ -14,10 +14,48 @@ import {
 } from '../components/ui/select';
 import { useState } from 'react';
 
-export default function Contact() {
+export default function Contact({ onSuccess }: { onSuccess?: () => void }) {
   const [locations, setLocations] = useState('');
   const [employees, setEmployees] = useState('');
   const [interest, setInterest] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    const data = new URLSearchParams();
+
+    // Add all form fields to URLSearchParams
+    for (const [key, value] of formData.entries()) {
+      data.append(key, value.toString());
+    }
+
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: data.toString(),
+      });
+
+      // Netlify will return a 200 or 303/200 on success. 
+      // Locally, it might return 404 because there is no server to handle the POST to /
+      // We should check if we are in production or mock it.
+      if (response.ok || window.location.hostname === 'localhost') {
+        onSuccess?.();
+      } else {
+        console.error("Form submission failed");
+        alert("Something went wrong. Please try again or contact us directly.");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      alert("Something went wrong. Please try again or contact us directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
@@ -49,12 +87,14 @@ export default function Contact() {
             >
               <h2 className="text-neutral-900 mb-6">Get in touch</h2>
 
-              <form className="space-y-6"
+              <form
+                className="space-y-6"
                 name="contact"
                 method="POST"
                 data-netlify="true"
                 netlify-honeypot="bot-field"
-                action="/thank-you">
+                onSubmit={handleSubmit}
+              >
                 <input type="hidden" name="form-name" value="contact" />
                 <input type="hidden" name="locations" value={locations} />
                 <input type="hidden" name="employees" value={employees} />
@@ -149,10 +189,11 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="w-full bg-primary-600 text-white px-8 py-4 rounded-lg hover:bg-primary-700 transition-colors inline-flex items-center justify-center space-x-2"
+                  disabled={isSubmitting}
+                  className="w-full bg-primary-600 text-white px-8 py-4 rounded-lg hover:bg-primary-700 transition-colors inline-flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span>Send Message</span>
-                  <Send size={20} />
+                  <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
+                  {!isSubmitting && <Send size={20} />}
                 </button>
 
                 <p className="text-sm text-neutral-500 text-center">

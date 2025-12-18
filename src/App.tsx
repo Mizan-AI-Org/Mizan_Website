@@ -14,7 +14,7 @@ export default function App() {
     // Handle hash and path-based navigation
     const handleNavigation = () => {
       const hash = window.location.hash.slice(1);
-      const path = window.location.pathname;
+      const path = window.location.pathname.replace(/\/$/, ""); // Normalize trailing slashes
 
       if (path === "/thank-you" || path === "/thank-you.html") {
         setCurrentPage("thank-you");
@@ -49,6 +49,12 @@ export default function App() {
     };
   }, []);
 
+  const handleContactSuccess = () => {
+    setCurrentPage("thank-you");
+    window.history.pushState({}, "", "/thank-you");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   // Render appropriate page
   if (currentPage === "thank-you") {
     return <ThankYou />;
@@ -63,7 +69,7 @@ export default function App() {
   }
 
   if (currentPage === "contact") {
-    return <Contact />;
+    return <Contact onSuccess={handleContactSuccess} />;
   }
 
   if (currentPage === "case-studies") {
