@@ -45,7 +45,17 @@ export default function Contact() {
             >
               <h2 className="text-neutral-900 mb-6">Get in touch</h2>
 
-              <form className="space-y-6">
+              <form className="space-y-6"
+                name="contact"
+                method="POST"
+                data-netlify="true"
+                netlify-honeypot="bot-field">
+                <input type="hidden" name="form-name" value="contact" />
+                {/* Honeypot */}
+                <p hidden>
+                  <label>Don’t fill this out: <input name="bot-field" /></label>
+                </p>
+
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="firstName">First Name</Label>
@@ -159,7 +169,6 @@ export default function Contact() {
                     </div>
                     <div>
                       <h4 className="text-neutral-900 mb-1">Email</h4>
-                      <p className="text-neutral-600">sales@heymizan.ai</p>
                       <p className="text-neutral-600">support@heymizan.ai</p>
                     </div>
                   </div>
