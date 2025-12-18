@@ -4,17 +4,21 @@ import Index from "./routes/_index";
 import Features from "./routes/features";
 import Pricing from "./routes/pricing";
 import Contact from "./routes/contact";
+import ThankYou from "./routes/thank-you";
 import ComingSoon from "./routes/coming-soon";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
 
   useEffect(() => {
-    // Handle hash-based navigation
-    const handleHashChange = () => {
+    // Handle hash and path-based navigation
+    const handleNavigation = () => {
       const hash = window.location.hash.slice(1);
+      const path = window.location.pathname;
 
-      if (hash === "features") {
+      if (path === "/thank-you") {
+        setCurrentPage("thank-you");
+      } else if (hash === "features") {
         setCurrentPage("features");
       } else if (hash === "pricing") {
         setCurrentPage("pricing");
@@ -32,21 +36,24 @@ export default function App() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    // Check initial hash
-    handleHashChange();
+    // Check initial navigation
+    handleNavigation();
 
-    // Listen for hash changes
-    window.addEventListener("hashchange", handleHashChange);
+    // Listen for hash changes and popstate (for path changes)
+    window.addEventListener("hashchange", handleNavigation);
+    window.addEventListener("popstate", handleNavigation);
 
     return () => {
-      window.removeEventListener(
-        "hashchange",
-        handleHashChange,
-      );
+      window.removeEventListener("hashchange", handleNavigation);
+      window.removeEventListener("popstate", handleNavigation);
     };
   }, []);
 
   // Render appropriate page
+  if (currentPage === "thank-you") {
+    return <ThankYou />;
+  }
+
   if (currentPage === "features") {
     return <Features />;
   }

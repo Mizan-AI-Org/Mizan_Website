@@ -54,7 +54,7 @@ export default function Contact() {
                 method="POST"
                 data-netlify="true"
                 netlify-honeypot="bot-field"
-                action="/thank-you.html">
+                action="/thank-you">
                 <input type="hidden" name="form-name" value="contact" />
                 <input type="hidden" name="locations" value={locations} />
                 <input type="hidden" name="employees" value={employees} />
@@ -240,10 +240,10 @@ export default function Contact() {
               <div className="bg-primary-600 rounded-2xl p-8 text-white">
                 <h4 className="text-white mb-2">Response Time</h4>
                 <p className="text-primary-100 mb-4">
-                  We typically respond to all inquiries within 2 business hours during office hours.
+                  We typically respond to all inquiries within 5 minutes during office hours.
                 </p>
                 <p className="text-primary-100">
-                  For urgent support needs, existing customers can reach us 24/7 through the in-app chat.
+                  For urgent support needs, existing customers can reach us 24/7 on +212 784476751.
                 </p>
               </div>
             </motion.div>
