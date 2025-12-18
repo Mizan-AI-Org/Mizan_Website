@@ -4,7 +4,6 @@ import Index from "./routes/_index";
 import Features from "./routes/features";
 import Pricing from "./routes/pricing";
 import Contact from "./routes/contact";
-import ThankYou from "./routes/thank-you";
 import ComingSoon from "./routes/coming-soon";
 
 export default function App() {
@@ -14,11 +13,8 @@ export default function App() {
     // Handle hash and path-based navigation
     const handleNavigation = () => {
       const hash = window.location.hash.slice(1);
-      const path = window.location.pathname.replace(/\/$/, ""); // Normalize trailing slashes
 
-      if (path === "/thank-you" || path === "/thank-you.html") {
-        setCurrentPage("thank-you");
-      } else if (hash === "features") {
+      if (hash === "features") {
         setCurrentPage("features");
       } else if (hash === "pricing") {
         setCurrentPage("pricing");
@@ -39,27 +35,15 @@ export default function App() {
     // Check initial navigation
     handleNavigation();
 
-    // Listen for hash changes and popstate (for path changes)
+    // Listen for hash changes
     window.addEventListener("hashchange", handleNavigation);
-    window.addEventListener("popstate", handleNavigation);
 
     return () => {
       window.removeEventListener("hashchange", handleNavigation);
-      window.removeEventListener("popstate", handleNavigation);
     };
   }, []);
 
-  const handleContactSuccess = () => {
-    setCurrentPage("thank-you");
-    window.history.pushState({}, "", "/thank-you");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   // Render appropriate page
-  if (currentPage === "thank-you") {
-    return <ThankYou />;
-  }
-
   if (currentPage === "features") {
     return <Features />;
   }
@@ -69,7 +53,7 @@ export default function App() {
   }
 
   if (currentPage === "contact") {
-    return <Contact onSuccess={handleContactSuccess} />;
+    return <Contact />;
   }
 
   if (currentPage === "case-studies") {
