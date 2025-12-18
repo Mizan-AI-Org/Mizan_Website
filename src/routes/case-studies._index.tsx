@@ -213,7 +213,7 @@ export default function CaseStudiesIndex() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <div className="text-5xl mb-2">500+</div>
+              <div className="text-5xl mb-2">10+</div>
               <div className="text-primary-100">Restaurants using Mizan</div>
             </motion.div>
             <motion.div

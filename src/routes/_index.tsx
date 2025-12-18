@@ -84,7 +84,7 @@ export default function Index() {
             >
               <div className="inline-flex items-center space-x-2 bg-secondary-50 text-secondary-700 px-4 py-2 rounded-full mb-6">
                 <Star size={16} fill="currentColor" />
-                <span className="text-sm">Trusted by 500+ restaurants</span>
+                <span className="text-sm">Trusted by 10+ restaurants</span>
               </div>
               
               <h1 className="text-neutral-900 mb-6">
@@ -343,7 +343,7 @@ export default function Index() {
           >
             <h2 className="text-white mb-6">Ready to transform your restaurant operations?</h2>
             <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-              Join 500+ restaurants already saving time and boosting profits with Mizan
+              Join 10+ restaurants already saving time and boosting profits with Mizan
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

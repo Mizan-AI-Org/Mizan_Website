@@ -490,7 +490,7 @@ export default function Features() {
           >
             <h2 className="text-white mb-6">Ready to transform your restaurant?</h2>
             <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-              Join 500+ restaurants already saving time, reducing costs, and empowering their teams with Mizan AI
+              Join 10+ restaurants already saving time, reducing costs, and empowering their teams with Mizan AI
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

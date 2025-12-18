@@ -16,7 +16,7 @@ export default function App() {
       const hash = window.location.hash.slice(1);
       const path = window.location.pathname;
 
-      if (path === "/thank-you") {
+      if (path === "/thank-you" || path === "/thank-you.html") {
         setCurrentPage("thank-you");
       } else if (hash === "features") {
         setCurrentPage("features");
