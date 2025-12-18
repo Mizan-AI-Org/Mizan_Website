@@ -64,7 +64,7 @@ export function Footer() {
             <h4 className="text-white mb-4">Product</h4>
             <ul className="space-y-2">
               {footerLinks.product.map((link) => (
-                <li key={link.href}>
+                <li key={`${link.href}-${link.name}`}>
                   <a href={link.href} className="text-neutral-400 hover:text-white transition-colors">
                     {link.name}
                   </a>
@@ -78,7 +78,7 @@ export function Footer() {
             <h4 className="text-white mb-4">Company</h4>
             <ul className="space-y-2">
               {footerLinks.company.map((link) => (
-                <li key={link.href}>
+                <li key={`${link.href}-${link.name}`}>
                   <a href={link.href} className="text-neutral-400 hover:text-white transition-colors">
                     {link.name}
                   </a>
@@ -92,7 +92,7 @@ export function Footer() {
             <h4 className="text-white mb-4">Resources</h4>
             <ul className="space-y-2">
               {footerLinks.resources.map((link) => (
-                <li key={link.href}>
+                <li key={`${link.href}-${link.name}`}>
                   <a href={link.href} className="text-neutral-400 hover:text-white transition-colors">
                     {link.name}
                   </a>
@@ -106,7 +106,7 @@ export function Footer() {
             <h4 className="text-white mb-4">Legal</h4>
             <ul className="space-y-2">
               {footerLinks.legal.map((link) => (
-                <li key={link.href}>
+                <li key={`${link.href}-${link.name}`}>
                   <a href={link.href} className="text-neutral-400 hover:text-white transition-colors">
                     {link.name}
                   </a>

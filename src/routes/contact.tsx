@@ -12,8 +12,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../components/ui/select';
+import { useState } from 'react';
 
 export default function Contact() {
+  const [locations, setLocations] = useState('');
+  const [employees, setEmployees] = useState('');
+  const [interest, setInterest] = useState('');
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
@@ -49,8 +53,12 @@ export default function Contact() {
                 name="contact"
                 method="POST"
                 data-netlify="true"
-                netlify-honeypot="bot-field">
+                netlify-honeypot="bot-field"
+                action="/thank-you.html">
                 <input type="hidden" name="form-name" value="contact" />
+                <input type="hidden" name="locations" value={locations} />
+                <input type="hidden" name="employees" value={employees} />
+                <input type="hidden" name="interest" value={interest} />
                 {/* Honeypot */}
                 <p hidden>
                   <label>Don’t fill this out: <input name="bot-field" /></label>
@@ -59,33 +67,33 @@ export default function Contact() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" placeholder="John" className="mt-2" />
+                    <Input id="firstName" name="firstName" placeholder="John" className="mt-2" required />
                   </div>
                   <div>
                     <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" placeholder="Doe" className="mt-2" />
+                    <Input id="lastName" name="lastName" placeholder="Doe" className="mt-2" required />
                   </div>
                 </div>
 
                 <div>
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="john@restaurant.com" className="mt-2" />
+                  <Input id="email" name="email" type="email" placeholder="john@restaurant.com" className="mt-2" required />
                 </div>
 
                 <div>
                   <Label htmlFor="phone">Phone Number</Label>
-                  <Input id="phone" type="tel" placeholder="+1 (555) 000-0000" className="mt-2" />
+                  <Input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" className="mt-2" />
                 </div>
 
                 <div>
                   <Label htmlFor="restaurantName">Restaurant Name</Label>
-                  <Input id="restaurantName" placeholder="Your Restaurant" className="mt-2" />
+                  <Input id="restaurantName" name="restaurantName" placeholder="Your Restaurant" className="mt-2" />
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="locations">Number of Locations</Label>
-                    <Select>
+                    <Select value={locations} onValueChange={setLocations}>
                       <SelectTrigger className="mt-2">
                         <SelectValue placeholder="Select..." />
                       </SelectTrigger>
@@ -99,7 +107,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <Label htmlFor="employees">Number of Employees</Label>
-                    <Select>
+                    <Select value={employees} onValueChange={setEmployees}>
                       <SelectTrigger className="mt-2">
                         <SelectValue placeholder="Select..." />
                       </SelectTrigger>
@@ -115,7 +123,7 @@ export default function Contact() {
 
                 <div>
                   <Label htmlFor="interest">What are you interested in?</Label>
-                  <Select>
+                  <Select value={interest} onValueChange={setInterest}>
                     <SelectTrigger className="mt-2">
                       <SelectValue placeholder="Select..." />
                     </SelectTrigger>
@@ -133,6 +141,7 @@ export default function Contact() {
                   <Label htmlFor="message">Message</Label>
                   <Textarea
                     id="message"
+                    name="message"
                     placeholder="Tell us about your restaurant and what you're looking for..."
                     className="mt-2 min-h-[120px]"
                   />
