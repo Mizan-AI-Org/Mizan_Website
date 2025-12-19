@@ -5,6 +5,7 @@ import Features from "./routes/features";
 import Pricing from "./routes/pricing";
 import Contact from "./routes/contact";
 import ComingSoon from "./routes/coming-soon";
+import Privacy from "./routes/privacy";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -13,13 +14,21 @@ export default function App() {
     // Handle hash and path-based navigation
     const handleNavigation = () => {
       const hash = window.location.hash.slice(1);
+      const path = window.location.pathname.replace(/^\//, "");
 
+      // Prefer hash (in-app section/page links), then fallback to path
       if (hash === "features") {
         setCurrentPage("features");
       } else if (hash === "pricing") {
         setCurrentPage("pricing");
       } else if (hash === "contact") {
         setCurrentPage("contact");
+      } else if (hash === "case-studies") {
+        setCurrentPage("case-studies");
+      } else if (hash === "blog") {
+        setCurrentPage("blog");
+      } else if (path === "privacy") {
+        setCurrentPage("privacy");
       } else if (hash === "case-studies") {
         setCurrentPage("case-studies");
       } else if (hash === "blog") {
@@ -35,7 +44,7 @@ export default function App() {
     // Check initial navigation
     handleNavigation();
 
-    // Listen for hash changes
+    // Listen for hash changes (in-app navigation)
     window.addEventListener("hashchange", handleNavigation);
 
     return () => {
@@ -54,6 +63,10 @@ export default function App() {
 
   if (currentPage === "contact") {
     return <Contact />;
+  }
+
+  if (currentPage === "privacy") {
+    return <Privacy />;
   }
 
   if (currentPage === "case-studies") {
