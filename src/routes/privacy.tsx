@@ -21,7 +21,7 @@ export default function Privacy() {
       <div className="h-16 md:h-20" />
 
       {/* Hero Header */}
-      <section className="pt-12 md:pt-16 pb-10 bg-linear-to-br from-neutral-50 to-primary-50/30">
+      <section className="mt-6 md:mt-10 pt-12 md:pt-16 pb-10 bg-linear-to-br from-neutral-50 to-primary-50/30">
         <div className="container-custom text-center">
           <div className="inline-flex items-center gap-2 bg-secondary-50 text-secondary-700 px-4 py-2 rounded-full mb-5">
             <Shield size={16} />
@@ -35,7 +35,7 @@ export default function Privacy() {
       </section>
 
       {/* Content */}
-      <section className="pb-20">
+        <section className="mt-6 md:mt-10 pb-20">
         <div className="container-custom max-w-3xl">
           <div id="privacy-content" className="bg-white border border-neutral-200 rounded-2xl shadow-lg p-8 md:p-12">
             <article className="prose prose-neutral md:prose-lg max-w-none break-words leading-relaxed md:leading-8 prose-headings:scroll-mt-24 prose-headings:font-semibold prose-headings:text-neutral-900 prose-h1:text-3xl md:prose-h1:text-4xl prose-h2:mt-12 prose-h3:mt-8 prose-p:my-6 md:prose-p:my-7 prose-p:text-base md:prose-p:text-lg prose-li:my-3 md:prose-li:my-4 prose-li:text-base md:prose-li:text-lg prose-ul:ml-6 prose-ol:ml-6 prose-ul:space-y-2 prose-ol:space-y-2 prose-hr:my-10 prose-a:text-primary-600 prose-a:underline-offset-2 hover:prose-a:underline prose-strong:text-neutral-900 prose-table:my-6 select-text">
