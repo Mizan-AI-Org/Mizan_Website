@@ -247,7 +247,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h4 className="text-neutral-900 mb-1">Email</h4>
-                      <p className="text-neutral-600">support@heymizan.ai</p>
+                      <p className="text-neutral-600">sales@heymizan.ai</p>
                     </div>
                   </div>
 
