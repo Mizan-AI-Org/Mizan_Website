@@ -306,7 +306,7 @@ export default function Contact() {
                     <div>
                       <h4 className="text-neutral-900 mb-1">Email</h4>
                       {/* Display email address. Note: changing this does not affect Netlify form recipients; configure notifications in Netlify or use a function to forward submissions. */}
-                      <p className="text-neutral-600">abed.hassani.idrissi@gmail.com</p>
+                      <p className="text-neutral-600">sales@heymizan.ai</p>
                     </div>
                   </div>
 

@@ -15,7 +15,7 @@ export default function Privacy() {
       <div className="h-16 md:h-20" />
 
       {/* Hero Header */}
-      <section className="pt-12 md:pt-16 pb-10 bg-linear-to-br from-neutral-50 to-primary-50/30">
+      <section className="mt-16 md:mt-20 mb-16 md:mb-20 pt-12 md:pt-16 pb-10 bg-linear-to-br from-neutral-50 to-primary-50/30">
         <div className="container-custom text-center">
           <div className="inline-flex items-center gap-2 bg-secondary-50 text-secondary-700 px-4 py-2 rounded-full mb-5">
             <Shield size={16} />
