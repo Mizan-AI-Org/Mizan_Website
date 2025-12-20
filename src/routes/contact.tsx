@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
 import { Navigation } from '../components/Navigation';
@@ -20,38 +21,67 @@ export default function Contact() {
   const [interest, setInterest] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  // Inline error feedback instead of browser alert popups
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Clear any previous error when starting a new submission
+    setErrorMessage(null);
     setIsSubmitting(true);
 
+    // Build application/x-www-form-urlencoded from current form values
     const formData = new FormData(e.currentTarget);
-    const data = new URLSearchParams();
-
-    // Add all form fields to URLSearchParams
+    const urlEncoded = new URLSearchParams();
     for (const [key, value] of formData.entries()) {
-      data.append(key, value.toString());
+      urlEncoded.append(key, value.toString());
+    }
+
+    // Local test: avoid network call and simulate success
+    // Rationale:
+    // - Netlify intercepts POSTs in production, but locally there's no endpoint
+    //   for '/'. Using a mock makes local testing smooth.
+    if (import.meta.env.DEV) {
+      await new Promise((r) => setTimeout(r, 600)); // simulate latency
+      setShowSuccess(true);
+      setErrorMessage(null);
+      setIsSubmitting(false);
+      // Reset the form and controlled select values
+      (e.currentTarget as HTMLFormElement).reset();
+      setLocations('');
+      setEmployees('');
+      setInterest('');
+      console.info('[DEV] Mocked Netlify form submission:', Object.fromEntries(formData.entries()));
+      return;
     }
 
     try {
-      const response = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: data.toString(),
+      // Production: Netlify will parse this POST and create a submission
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: urlEncoded.toString(),
       });
 
-      // Netlify will return a 200 or 303/200 on success. 
-      // Locally, it might return 404 because there is no server to handle the POST to /
-      // We should check if we are in production or mock it.
-      if (response.ok || window.location.hostname === 'localhost') {
+      // Netlify Forms often respond with 200 or a 302/303 redirect.
+      // Treat 200, 302, and 303 as success for SPA UX.
+      const isSuccess = response.ok || response.status === 302 || response.status === 303;
+      if (isSuccess) {
+        
         setShowSuccess(true);
+        setErrorMessage(null);
+        // Optional: reset after success
+        (e.currentTarget as HTMLFormElement).reset();
+        setLocations('');
+        setEmployees('');
+        setInterest('');
       } else {
-        console.error("Form submission failed");
-        alert("Something went wrong. Please try again or contact us directly.");
+        console.error('Form submission failed', response.status);
+        setErrorMessage('Something went wrong. Please try again or contact us directly.');
       }
     } catch (error) {
-      console.error("Form submission error:", error);
-      alert("Something went wrong. Please try again or contact us directly.");
+      console.error('Form submission error:', error);
+      setErrorMessage('Something went wrong. Please try again or contact us directly.');
     } finally {
       setIsSubmitting(false);
     }
@@ -85,7 +115,7 @@ export default function Contact() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-            >
+              >
               <h2 className="text-neutral-900 mb-6">Get in touch</h2>
 
               {showSuccess ? (
@@ -93,6 +123,7 @@ export default function Contact() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="bg-primary-50 border border-primary-100 rounded-2xl p-8 text-center"
+                  aria-live="polite" role="status"
                 >
                   <motion.div
                     initial={{ scale: 0 }}
@@ -107,7 +138,10 @@ export default function Contact() {
                     Thank you for reaching out. We've received your inquiry and our team will get back to you within 5 minutes.
                   </p>
                   <button
-                    onClick={() => setShowSuccess(false)}
+                    onClick={() => {
+                      setShowSuccess(false);
+                      setErrorMessage(null);
+                    }}
                     className="text-primary-600 font-semibold hover:text-primary-700 transition-colors"
                   >
                     Send another message
@@ -120,16 +154,31 @@ export default function Contact() {
                   method="POST"
                   data-netlify="true"
                   netlify-honeypot="bot-field"
+                  // IMPORTANT for Netlify Forms:
+                  // - name must match the hidden form in index.html
+                  // - include a hidden input `form-name` with the same value
+                  // - data-netlify attribute enables Netlify parsing
+                  // - honeypot helps block simple bots
                   onSubmit={handleSubmit}
                 >
+                  {/* Inline error banner shown when submission fails */}
+                  {errorMessage && (
+                    <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-red-700" role="alert" aria-live="assertive">
+                      {errorMessage}
+                    </div>
+                  )}
                   <input type="hidden" name="form-name" value="contact" />
-                  <input type="hidden" name="locations" value={locations} />
-                  <input type="hidden" name="employees" value={employees} />
-                  <input type="hidden" name="interest" value={interest} />
+                  {/* These hidden inputs mirror custom Selects so Netlify receives real values */}
+                  <input type="hidden" name="locations" value={locations} required />
+                  <input type="hidden" name="employees" value={employees} required />
+                  <input type="hidden" name="interest" value={interest} required />
                   {/* Honeypot */}
                   <p hidden>
                     <label>Don’t fill this out: <input name="bot-field" /></label>
                   </p>
+
+                  {/* Optional anti-spam: enable reCAPTCHA in Netlify site settings and uncomment below */}
+                  {/* <div data-netlify-recaptcha="true"></div> */}
 
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
@@ -149,7 +198,15 @@ export default function Contact() {
 
                   <div>
                     <Label htmlFor="phone">Phone Number</Label>
-                    <Input id="phone" name="phone" type="tel" placeholder="+1 (555) 000-0000" className="mt-2" />
+                    {/* Basic pattern to nudge valid numbers; not strict to allow intl formats */}
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      placeholder="+1 (555) 000-0000"
+                      className="mt-2"
+                      pattern="^[+()\-\s\d]{7,}$"
+                    />
                   </div>
 
                   <div>
@@ -160,6 +217,7 @@ export default function Contact() {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="locations">Number of Locations</Label>
+                      {/* Custom Select keeps value in state; hidden input above is the actual form field */}
                       <Select value={locations} onValueChange={setLocations}>
                         <SelectTrigger className="mt-2">
                           <SelectValue placeholder="Select..." />
@@ -247,7 +305,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <h4 className="text-neutral-900 mb-1">Email</h4>
-                      <p className="text-neutral-600">sales@heymizan.ai</p>
+                      {/* Display email address. Note: changing this does not affect Netlify form recipients; configure notifications in Netlify or use a function to forward submissions. */}
+                      <p className="text-neutral-600">abed.hassani.idrissi@gmail.com</p>
                     </div>
                   </div>
 
