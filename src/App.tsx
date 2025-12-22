@@ -14,7 +14,6 @@ export default function App() {
     // Handle hash and path-based navigation
     const handleNavigation = () => {
       const hash = window.location.hash.slice(1);
-      const path = window.location.pathname.replace(/^\//, "");
 
       // Prefer hash (in-app section/page links), then fallback to path
       if (hash === "features") {
@@ -27,7 +26,7 @@ export default function App() {
         setCurrentPage("case-studies");
       } else if (hash === "blog") {
         setCurrentPage("blog");
-      } else if (path === "privacy") {
+      } else if (hash === "privacy") {
         setCurrentPage("privacy");
       } else if (hash === "case-studies") {
         setCurrentPage("case-studies");

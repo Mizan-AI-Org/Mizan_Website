@@ -21,7 +21,7 @@ export function Footer() {
       { name: 'System Status', href: '#status' },
     ],
     legal: [
-      { name: 'Privacy Policy', href: '/privacy' },
+      { name: 'Privacy Policy', href: '#privacy' },
       { name: 'Terms of Service', href: '#terms' },
       { name: 'Cookie Policy', href: '#cookies' },
       { name: 'GDPR', href: '#gdpr' },
