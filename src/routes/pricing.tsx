@@ -18,10 +18,10 @@ export default function Pricing() {
     {
       name: 'Starter',
       description: 'Perfect for single-location restaurants getting started',
-      monthlyPrice: 99,
+      monthlyPrice: 89,
       annualPrice: 89,
-      maxEmployees: 15,
-      employeeLabel: 'Up to 15 employees',
+      maxEmployees: 40,
+      employeeLabel: 'Up to 40 employees',
       features: [
         'AI-Powered Scheduling',
         'Employee Availability & Time-Off',
@@ -42,12 +42,12 @@ export default function Pricing() {
     {
       name: 'Pro',
       description: 'For growing restaurants that need insights and control',
-      monthlyPrice: 189,
-      annualPrice: 169,
-      maxEmployees: 50,
-      employeeLabel: 'Up to 50 employees',
+      monthlyPrice: 149,
+      annualPrice: 149,
+      maxEmployees: 80,
+      employeeLabel: '40 to 80 employees',
       features: [
-        'Everything in Essential',
+        'Everything in Starter',
         'Advanced Labor Analytics',
         'Performance & Sales Integration',
         'Forecast-Based Scheduling',
@@ -88,7 +88,8 @@ export default function Pricing() {
 
   const getPrice = (plan: typeof plans[0]) => {
     if (plan.monthlyPrice === null) return null;
-    return billingCycle === 'annual' ? plan.annualPrice : plan.monthlyPrice;
+    const monthly = plan.monthlyPrice;
+    return billingCycle === 'annual' ? Math.round(monthly * 0.85) : monthly;
   };
 
   const faqs = [
@@ -131,7 +132,7 @@ export default function Pricing() {
       <Navigation />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-br from-neutral-50 to-primary-50/30">
+      <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-linear-to-br from-neutral-50 to-primary-50/30">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -236,10 +237,10 @@ export default function Pricing() {
                     {employeeCount} employees
                   </div>
                   <p className="text-neutral-600">
-                    {employeeCount <= 15
-                      ? '→ Starter Plan ($99/mo)'
-                      : employeeCount <= 50
-                        ? '→ Pro Plan ($189/mo)'
+                    {employeeCount <= 40
+                      ? '→ Starter Plan ($89/mo)'
+                      : employeeCount <= 80
+                        ? '→ Pro Plan ($149/mo)'
                         : '→ Enterprise Plan (Custom pricing)'}
                   </p>
                 </div>
@@ -322,13 +323,13 @@ export default function Pricing() {
                   <div className="space-y-3">
                     {plan.features.map((feature, idx) => (
                       <div key={idx} className="flex items-start space-x-3">
-                        <Check className="text-primary-600 flex-shrink-0 mt-0.5" size={20} />
+                        <Check className="text-primary-600 shrink-0 mt-0.5" size={20} />
                         <span className="text-neutral-700">{feature}</span>
                       </div>
                     ))}
                     {plan.notIncluded.map((feature, idx) => (
                       <div key={idx} className="flex items-start space-x-3 opacity-50">
-                        <X className="text-neutral-400 flex-shrink-0 mt-0.5" size={20} />
+                        <X className="text-neutral-400 shrink-0 mt-0.5" size={20} />
                         <span className="text-neutral-500">{feature}</span>
                       </div>
                     ))}
@@ -351,19 +352,19 @@ export default function Pricing() {
               <div>
                 <div className="text-2xl mb-2">🍽️</div>
                 <h4 className="text-neutral-900 mb-2">Small Restaurant</h4>
-                <p className="text-neutral-600 mb-3">Up to 15 employees</p>
-                <p className="text-primary-600 font-medium">→ Essential Plan</p>
+                <p className="text-neutral-600 mb-3">Up to 40 employees</p>
+                <p className="text-primary-600 font-medium">→ Starter Plan</p>
               </div>
               <div>
                 <div className="text-2xl mb-2">🏪</div>
                 <h4 className="text-neutral-900 mb-2">Growing Business</h4>
-                <p className="text-neutral-600 mb-3">Up to 50 employees</p>
-                <p className="text-primary-600 font-medium">→ Professional Plan</p>
+                <p className="text-neutral-600 mb-3">40 to 80 employees</p>
+                <p className="text-primary-600 font-medium">→ Pro Plan</p>
               </div>
               <div>
                 <div className="text-2xl mb-2">🏢</div>
                 <h4 className="text-neutral-900 mb-2">Restaurant Groups</h4>
-                <p className="text-neutral-600 mb-3">50+ employees or multi-location</p>
+                <p className="text-neutral-600 mb-3">80+ employees or multi-location</p>
                 <p className="text-primary-600 font-medium">→ Enterprise Plan</p>
               </div>
             </div>
@@ -424,7 +425,7 @@ export default function Pricing() {
       </section>
 
       {/* CTA */}
-      <section className="section-padding bg-gradient-to-br from-primary-600 to-primary-800 text-white">
+      <section className="section-padding bg-linear-to-br from-primary-600 to-primary-800 text-white">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

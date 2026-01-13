@@ -33,7 +33,7 @@ export default function Index() {
   ];
 
   const stats = [
-    { value: 500, suffix: '+', label: 'Restaurants using Mizan' },
+    { value: 50, suffix: '+', label: 'Restaurants using Mizan' },
     { value: 70, suffix: '%', label: 'Reduction in scheduling time' },
     { value: 35, suffix: '%', label: 'Decrease in staff turnover' },
     { value: 99, suffix: '%', label: 'WhatsApp message delivery rate' },
@@ -207,9 +207,10 @@ export default function Index() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-neutral-900 mb-4">Everything you need to run a better restaurant</h2>
+            <h2 className="text-neutral-900 mb-4">Everything you need to run smarter restaurant operations</h2>
             <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-              Powerful features designed specifically for the unique challenges of restaurant operations
+              Reach your team where they already are.<br />
+              Send schedules, shift updates, and reminders instantly via WhatsApp /no friction, no new app to learn.
             </p>
           </motion.div>
 
