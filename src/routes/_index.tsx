@@ -88,7 +88,7 @@ export default function Index() {
               </div>
               
               <h1 className="text-neutral-900 mb-6">
-                The operating system your restaurant actually needs
+                The all-in-one operating systgem managers & teams truly need
               </h1>
               
               <p className="text-xl text-neutral-600 mb-8">
@@ -120,6 +120,10 @@ export default function Index() {
                   <CheckCircle size={16} className="text-secondary-600" />
                   <span>No credit card required</span>
                 </div>
+                <div className="flex items-center space-x-2">
+                  <CheckCircle size={16} className="text-secondary-600" />
+                  <span>Cancel anytime</span>
+                </div>
               </div>
             </motion.div>
 
@@ -131,7 +135,7 @@ export default function Index() {
             >
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                 <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src="/work_overload.png"
                   alt="Restaurant manager using Mizan on tablet"
                   className="w-full h-auto"
                 />
