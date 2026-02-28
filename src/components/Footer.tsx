@@ -34,11 +34,8 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8 mb-8">
           {/* Brand */}
           <div className="col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
-                <div className="w-5 h-5 border-3 border-white rounded-full"></div>
-              </div>
-              <span className="text-xl font-bold text-white">Mizan</span>
+            <div className="mb-4">
+              <img src="/logo.png" alt="Mizan" className="h-10 w-auto" />
             </div>
             <p className="text-neutral-400 mb-6 max-w-sm">
               The intelligent restaurant management platform. Streamline operations, empower your team, and boost profitability.
@@ -120,7 +117,7 @@ export function Footer() {
         <div className="pt-8 border-t border-neutral-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-neutral-400">
-              © 2025 Mizan AI. All rights reserved.
+              © 2026 Mizan AI. All rights reserved.
             </p>
             <p className="text-neutral-400">
               Built for restaurant operators, by restaurant technology experts.

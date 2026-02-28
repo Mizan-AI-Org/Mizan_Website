@@ -1,9 +1,6 @@
+import React from 'react';
 import { motion } from 'motion/react';
-import { 
-  Calendar, 
-  MessageSquare, 
-  BarChart3, 
-  TrendingUp,
+import {
   CheckCircle,
   Star,
   ArrowRight
@@ -13,27 +10,87 @@ import { Footer } from '../components/Footer';
 import { AnimatedCounter } from '../components/AnimatedCounter';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
+// Wave Divider Component - Concave elliptical style (INEO-inspired)
+function WaveDivider() {
+  return (
+    <div className="wave-divider">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1400 80"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0,0 Q720,200 1440,0 L1440,200 L0,200 Z"
+          className="shape-fill"
+        />
+      </svg>
+    </div>
+  );
+}
+
+// All-In-One Platform Hub Component - EXACT INEO MATCH (ineo.ma)
+// Updated with premium images and animated connections
+// All-In-One Platform Hub Component
+function AllInOnePlatform() {
+  return (
+    <section className="section-padding bg-white overflow-hidden">
+      <div className="container-custom">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-[#0066cc] mb-6">An All-In-One Platform</h2>
+          <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
+            Everything you need to run your restaurant operations, connected through one intelligent system
+          </p>
+        </motion.div>
+
+        {/* Mizan AI Hub GIF */}
+        <div className="relative w-full flex justify-center items-center py-8">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="w-full max-w-5xl shadow-[0_50px_100px_rgba(0,0,0,0.1)] rounded-[3rem] overflow-hidden border border-neutral-100"
+          >
+            <img
+              src="/gif.gif"
+              alt="Mizan AI All-In-One Platform"
+              className="w-full h-auto object-contain"
+            />
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// FAQ Accordion Component
+
 export default function Index() {
   const features = [
     {
-      icon: Calendar,
+      image: '/images/features/scheduling.png',
       title: 'Smart Scheduling',
       description: 'AI-powered scheduling that considers availability, skills, and labor costs. Cut scheduling time by 70%.',
     },
     {
-      icon: MessageSquare,
+      image: '/images/features/whatsapp.png',
       title: 'WhatsApp Integration',
       description: 'Communicate with your team where they already are. Send schedules, updates, and reminders instantly.',
     },
     {
-      icon: BarChart3,
+      image: '/images/features/analytics.png',
       title: 'Performance Analytics',
       description: 'Track KPIs, sales per labor hour, and team performance. Make data-driven decisions that boost profitability.',
     },
   ];
 
   const stats = [
-    { value: 500, suffix: '+', label: 'Restaurants using Mizan' },
+    { value: 10, suffix: '+', label: 'Restaurants using Mizan' },
     { value: 70, suffix: '%', label: 'Reduction in scheduling time' },
     { value: 35, suffix: '%', label: 'Decrease in staff turnover' },
     { value: 99, suffix: '%', label: 'WhatsApp message delivery rate' },
@@ -41,7 +98,7 @@ export default function Index() {
 
   const testimonials = [
     {
-      quote: "Mizan completely transformed how we manage our three locations. What used to take hours now takes minutes.",
+      quote: "Mizan completely transformed how we manage our restaurant operations and staff scheduling. What used to take hours now takes minutes.",
       author: "Hamza Hadni",
       role: "Owner, Barometře, Marrakesh",
       image: ""
@@ -54,19 +111,28 @@ export default function Index() {
     },
     {
       quote: "The performance insights helped us identify and fix issues we didn't even know existed. ROI in the first month.",
-      author: "Ali Haidar",
+      author: "Imran Haidar",
       role: "General Manager, Ima Restaurant, Benguerir",
       image: ""
     },
   ];
 
-  const benefits = [
-    'Reduce scheduling conflicts',
-    'Improve team communication',
-    'Track labor costs in real-time',
-    'Reduce no-shows by 60%',
-    'Automated shift reminders',
-    'Performance-based insights',
+  const valueProps = [
+    {
+      icon: '🔗',
+      title: 'Connected',
+      description: 'Real-time sync across all your restaurant operations',
+    },
+    {
+      icon: '✨',
+      title: 'Intuitive',
+      description: 'User-friendly interface that your team will love',
+    },
+    {
+      icon: '🔒',
+      title: 'Secure',
+      description: 'Enterprise-grade security for your data',
+    },
   ];
 
   return (
@@ -74,101 +140,55 @@ export default function Index() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-br from-neutral-50 to-primary-50/30 overflow-hidden">
-        <div className="container-custom">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+      <section className="hero-pattern relative pt-32 pb-80 md:pt-40 md:pb-[400px] overflow-hidden">
+        <div className="container-custom relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="inline-flex items-center space-x-2 bg-secondary-50 text-secondary-700 px-4 py-2 rounded-full mb-6">
-                <Star size={16} fill="currentColor" />
-                <span className="text-sm">Trusted by 10+ restaurants</span>
-              </div>
-              
-              <h1 className="text-neutral-900 mb-6">
-                The operating system your restaurant actually needs
+              <h1 className="text-white mb-6 text-4xl md:text-5xl lg:text-6xl uppercase font-extrabold">
+                The Operating System Your Restaurant Actually Needs
               </h1>
-              
-              <p className="text-xl text-neutral-600 mb-8">
+
+              <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto">
                 Mizan streamlines scheduling, reduces no-shows, and boosts team performance through intelligent automation and WhatsApp integration
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <a
-                  href="#contact"
-                  className="bg-primary-600 text-white px-8 py-4 rounded-lg hover:bg-primary-700 transition-colors text-center inline-flex items-center justify-center space-x-2"
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  className="bg-white text-primary-600 px-8 py-4 rounded-full hover:bg-neutral-100 transition-all duration-300 text-center inline-flex items-center justify-center space-x-2 font-semibold shadow-lg hover:shadow-xl"
                 >
-                  <span>Start Free Trial</span>
+                  <span>Get Started</span>
                   <ArrowRight size={20} />
-                </a>
-                <a
-                  href="#contact"
-                  className="border-2 border-neutral-300 text-neutral-900 px-8 py-4 rounded-lg hover:border-primary-600 hover:text-primary-600 transition-colors text-center"
-                >
-                  Book a Demo
-                </a>
-              </div>
-
-              <div className="flex items-center space-x-6 text-sm text-neutral-600">
-                <div className="flex items-center space-x-2">
-                  <CheckCircle size={16} className="text-secondary-600" />
-                  <span>14-day free trial</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle size={16} className="text-secondary-600" />
-                  <span>No credit card required</span>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative"
-            >
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  alt="Restaurant manager using Mizan on tablet"
-                  className="w-full h-auto"
-                />
-                
-                {/* Floating Dashboard Preview */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.8 }}
-                  className="absolute bottom-4 left-4 right-4 bg-white rounded-xl shadow-xl p-4"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-neutral-600">Today's Overview</span>
-                    <div className="flex items-center space-x-1 text-primary-600">
-                      <TrendingUp size={16} />
-                      <span className="text-sm">+12%</span>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="bg-neutral-50 rounded-lg p-2">
-                      <div className="text-xs text-neutral-500">Staff</div>
-                      <div className="font-bold text-neutral-900">24</div>
-                    </div>
-                    <div className="bg-neutral-50 rounded-lg p-2">
-                      <div className="text-xs text-neutral-500">Hours</div>
-                      <div className="font-bold text-neutral-900">186</div>
-                    </div>
-                    <div className="bg-neutral-50 rounded-lg p-2">
-                      <div className="text-xs text-neutral-500">Labor %</div>
-                      <div className="font-bold text-neutral-900">28.4</div>
-                    </div>
-                  </div>
-                </motion.div>
+                </button>
               </div>
             </motion.div>
           </div>
+
+          {/* Hero Image */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="mt-8 max-w-3xl mx-auto z-20 relative"
+          >
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-white/10 backdrop-blur-sm p-2">
+              <video
+                src="/mizan_ad.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto rounded-xl max-h-[400px] object-cover"
+              />
+            </div>
+          </motion.div>
         </div>
+
+        {/* Wave Divider */}
+        <WaveDivider />
       </section>
 
       {/* Stats Section */}
@@ -184,18 +204,21 @@ export default function Index() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="text-4xl md:text-5xl font-bold mb-2">
+                <div className="text-3xl md:text-4xl font-bold mb-1">
                   <AnimatedCounter end={stat.value} suffix={stat.suffix} />
                 </div>
-                <div className="text-primary-100">{stat.label}</div>
+                <div className="text-primary-100 text-sm md:text-base">{stat.label}</div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* All-In-One Platform Section */}
+      <AllInOnePlatform />
+
       {/* Features Section */}
-      <section className="section-padding">
+      <section className="section-padding bg-neutral-50">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -209,7 +232,7 @@ export default function Index() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-12">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -217,76 +240,51 @@ export default function Index() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white border border-neutral-200 rounded-2xl p-8 hover:shadow-xl hover:border-primary-200 transition-all duration-300"
+                className="feature-card bg-white border border-neutral-100 rounded-[2rem] p-0 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group"
               >
-                <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
-                  <feature.icon className="text-primary-600" size={24} />
+                <div className="aspect-[4/3] w-full overflow-hidden bg-neutral-50 relative">
+                  <ImageWithFallback
+                    src={feature.image}
+                    alt={feature.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/20 to-transparent" />
                 </div>
-                <h3 className="text-neutral-900 mb-4">{feature.title}</h3>
-                <p className="text-neutral-600">{feature.description}</p>
+                <div className="p-8">
+                  <h3 className="text-neutral-900 mb-4 text-2xl font-bold tracking-tight">{feature.title}</h3>
+                  <p className="text-neutral-600 leading-relaxed">{feature.description}</p>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Benefits Grid */}
-      <section className="section-padding bg-neutral-50">
+      {/* Value Proposition Cards */}
+      <section className="section-padding-sm bg-white">
         <div className="container-custom">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-neutral-900 mb-6">Built for the way restaurants actually work</h2>
-              <p className="text-lg text-neutral-600 mb-8">
-                We understand the complexity of restaurant operations. Mizan adapts to your workflow, not the other way around.
-              </p>
-
-              <div className="grid grid-cols-1 gap-4">
-                {benefits.map((benefit, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
-                    className="flex items-center space-x-3"
-                  >
-                    <CheckCircle className="text-secondary-600 flex-shrink-0" size={20} />
-                    <span className="text-neutral-700">{benefit}</span>
-                  </motion.div>
-                ))}
-              </div>
-
-              <a
-                href="#features"
-                className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 mt-8"
+          <div className="grid md:grid-cols-3 gap-8">
+            {valueProps.map((prop, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="text-center p-8"
               >
-                <span>Explore all features</span>
-                <ArrowRight size={20} />
-              </a>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              <ImageWithFallback
-              src='https://plus.unsplash.com/premium_photo-1661883237884-263e8de8869b?q=80&w=2089&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-              alt="Restaurant staff team working together"
-                className="rounded-2xl shadow-2xl w-full"
-              />
-            </motion.div>
+                <div className="text-5xl mb-4">{prop.icon}</div>
+                <h3 className="text-neutral-900 mb-2 text-xl font-semibold">{prop.title}</h3>
+                <p className="text-neutral-600">{prop.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
+
       {/* Testimonials Section */}
-      <section className="section-padding">
+      <section className="section-padding bg-neutral-50">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -294,7 +292,7 @@ export default function Index() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-neutral-900 mb-4">Loved by restaurant operators worldwide</h2>
+            <h2 className="text-neutral-900 mb-4">Loved by restaurant operators across MENA</h2>
             <p className="text-xl text-neutral-600">
               Join hundreds of restaurants already saving time and money with Mizan
             </p>
@@ -333,6 +331,7 @@ export default function Index() {
         </div>
       </section>
 
+
       {/* CTA Section */}
       <section className="section-padding bg-gradient-to-br from-primary-600 to-primary-800 text-white">
         <div className="container-custom text-center">
@@ -345,24 +344,15 @@ export default function Index() {
             <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
               Join 10+ restaurants already saving time and boosting profits with Mizan
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="#contact"
-                className="bg-white text-primary-600 px-8 py-4 rounded-lg hover:bg-neutral-100 transition-colors inline-flex items-center justify-center space-x-2"
-              >
-                <span>Start Free Trial</span>
-                <ArrowRight size={20} />
-              </a>
-              <a
-                href="#pricing"
-                className="border-2 border-white text-white px-8 py-4 rounded-lg hover:bg-white/10 transition-colors"
-              >
-                View Pricing
-              </a>
-            </div>
 
-            <p className="text-primary-100 mt-6">14-day free trial • No credit card required • Cancel anytime</p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                className="bg-white text-primary-600 px-8 py-4 rounded-full hover:bg-neutral-100 transition-colors inline-flex items-center justify-center space-x-2 font-semibold"
+              >
+                <span>Book a Demo</span>
+                <ArrowRight size={20} />
+              </button>
+            </div>
           </motion.div>
         </div>
       </section>

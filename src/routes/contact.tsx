@@ -26,62 +26,30 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Clear any previous error when starting a new submission
     setErrorMessage(null);
     setIsSubmitting(true);
 
-    // Build application/x-www-form-urlencoded from current form values
-    const formData = new FormData(e.currentTarget);
-    const urlEncoded = new URLSearchParams();
-    for (const [key, value] of formData.entries()) {
-      urlEncoded.append(key, value.toString());
-    }
-
-    // Local test: avoid network call and simulate success
-    // Rationale:
-    // - Netlify intercepts POSTs in production, but locally there's no endpoint
-    //   for '/'. Using a mock makes local testing smooth.
-    if (import.meta.env.DEV) {
-      await new Promise((r) => setTimeout(r, 600)); // simulate latency
-      setShowSuccess(true);
-      setErrorMessage(null);
-      setIsSubmitting(false);
-      // Reset the form and controlled select values
-      (e.currentTarget as HTMLFormElement).reset();
-      setLocations('');
-      setEmployees('');
-      setInterest('');
-      console.info('[DEV] Mocked Netlify form submission:', Object.fromEntries(formData.entries()));
-      return;
-    }
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
     try {
-      // Production: Netlify will parse this POST and create a submission
       const response = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: urlEncoded.toString(),
+        body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
       });
 
-      // Netlify Forms often respond with 200 or a 302/303 redirect.
-      // Treat 200, 302, and 303 as success for SPA UX.
-      const isSuccess = response.ok || response.status === 302 || response.status === 303;
-      if (isSuccess) {
-        
+      if (response.ok) {
         setShowSuccess(true);
-        setErrorMessage(null);
-        // Optional: reset after success
-        (e.currentTarget as HTMLFormElement).reset();
+        form.reset();
         setLocations('');
         setEmployees('');
         setInterest('');
       } else {
-        console.error('Form submission failed', response.status);
         setErrorMessage('Something went wrong. Please try again or contact us directly.');
       }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      setErrorMessage('Something went wrong. Please try again or contact us directly.');
+    } catch {
+      setErrorMessage('Network error. Please check your connection and try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -115,7 +83,7 @@ export default function Contact() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
-              >
+            >
               <h2 className="text-neutral-900 mb-6">Get in touch</h2>
 
               {showSuccess ? (
@@ -154,11 +122,6 @@ export default function Contact() {
                   method="POST"
                   data-netlify="true"
                   netlify-honeypot="bot-field"
-                  // IMPORTANT for Netlify Forms:
-                  // - name must match the hidden form in index.html
-                  // - include a hidden input `form-name` with the same value
-                  // - data-netlify attribute enables Netlify parsing
-                  // - honeypot helps block simple bots
                   onSubmit={handleSubmit}
                 >
                   {/* Inline error banner shown when submission fails */}
@@ -174,11 +137,8 @@ export default function Contact() {
                   <input type="hidden" name="interest" value={interest} required />
                   {/* Honeypot */}
                   <p hidden>
-                    <label>Don’t fill this out: <input name="bot-field" /></label>
+                    <label>Don't fill this out: <input name="bot-field" /></label>
                   </p>
-
-                  {/* Optional anti-spam: enable reCAPTCHA in Netlify site settings and uncomment below */}
-                  {/* <div data-netlify-recaptcha="true"></div> */}
 
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
@@ -198,7 +158,6 @@ export default function Contact() {
 
                   <div>
                     <Label htmlFor="phone">Phone Number</Label>
-                    {/* Basic pattern to nudge valid numbers; not strict to allow intl formats */}
                     <Input
                       id="phone"
                       name="phone"
@@ -217,7 +176,6 @@ export default function Contact() {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="locations">Number of Locations</Label>
-                      {/* Custom Select keeps value in state; hidden input above is the actual form field */}
                       <Select value={locations} onValueChange={setLocations}>
                         <SelectTrigger className="mt-2">
                           <SelectValue placeholder="Select..." />
@@ -299,18 +257,17 @@ export default function Contact() {
                 <h3 className="text-neutral-900 mb-6">Contact Information</h3>
 
                 <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start space-x-4 leading-5">
                     <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Mail className="text-primary-600" size={20} />
                     </div>
                     <div>
                       <h4 className="text-neutral-900 mb-1">Email</h4>
-                      {/* Display email address. Note: changing this does not affect Netlify form recipients; configure notifications in Netlify or use a function to forward submissions. */}
                       <p className="text-neutral-600">sales@heymizan.ai</p>
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start space-x-4 leading-5">
                     <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Phone className="text-primary-600" size={20} />
                     </div>
@@ -321,15 +278,13 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start space-x-4 leading-5">
                     <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
                       <MapPin className="text-primary-600" size={20} />
                     </div>
                     <div>
                       <h4 className="text-neutral-900 mb-1">Office</h4>
-                      <p className="text-neutral-600">
-                        Marrakech, Morocco
-                      </p>
+                      <p className="text-neutral-600">Marrakech, Morocco</p>
                     </div>
                   </div>
                 </div>
@@ -338,25 +293,25 @@ export default function Contact() {
               <div className="bg-gradient-to-br from-neutral-50 to-primary-50/30 rounded-2xl p-8">
                 <h4 className="text-neutral-900 mb-4">Why choose Mizan?</h4>
                 <ul className="space-y-3">
-                  <li className="flex items-start space-x-3">
+                  <li className="flex items-start space-x-3 leading-5">
                     <div className="w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-white text-xs">✓</span>
                     </div>
                     <span className="text-neutral-700">14-day free trial with full features</span>
                   </li>
-                  <li className="flex items-start space-x-3">
+                  <li className="flex items-start space-x-3 leading-5">
                     <div className="w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-white text-xs">✓</span>
                     </div>
                     <span className="text-neutral-700">Setup and training included</span>
                   </li>
-                  <li className="flex items-start space-x-3">
+                  <li className="flex items-start space-x-3 leading-5">
                     <div className="w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-white text-xs">✓</span>
                     </div>
                     <span className="text-neutral-700">Dedicated customer success team</span>
                   </li>
-                  <li className="flex items-start space-x-3">
+                  <li className="flex items-start space-x-3 leading-5">
                     <div className="w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-white text-xs">✓</span>
                     </div>
@@ -393,7 +348,7 @@ export default function Contact() {
             <div>
               <h4 className="text-neutral-900 mb-2">How long does setup take?</h4>
               <p className="text-neutral-600">
-                Most restaurants are up and running within 24-48 hours. We handle the technical setup and provide training for your team.
+                Most restaurants are up and running within 30 minutes. We handle the technical setup and provide training for your team.
               </p>
             </div>
             <div>

@@ -1,17 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mizan AI</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
 
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Mizan AI</title>
-      <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    </head>
+  <body>
+    <div id="root"></div>
 
-    <body>
-        <div id="root"></div>
-
-        <!--
+    <!--
           Hidden Netlify form for build-time detection
           Why this exists:
           - Netlify scans your generated HTML at build time to discover forms.
@@ -20,25 +19,30 @@
             Netlify creates the backend for submissions.
           - Your app still uses the modern React form in src/routes/contact.tsx.
         -->
-        <form name="contact" netlify netlify-honeypot="bot-field" method="POST" hidden>
-          <!-- The hidden form must mirror the fields used by your React form -->
-          <input type="hidden" name="form-name" value="contact" />
-          <input name="bot-field" />
+    <form
+      name="contact"
+      netlify
+      netlify-honeypot="bot-field"
+      method="POST"
+      hidden
+    >
+      <!-- The hidden form must mirror the fields used by your React form -->
+      <input type="hidden" name="form-name" value="contact" />
+      <input name="bot-field" />
 
-          <input type="text" name="firstName" />
-          <input type="text" name="lastName" />
-          <input type="email" name="email" />
-          <input type="tel" name="phone" />
-          <input type="text" name="restaurantName" />
+      <input type="text" name="firstName" />
+      <input type="text" name="lastName" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="restaurantName" />
 
-          <!-- Custom selects in React are represented via hidden inputs -->
-          <input type="text" name="locations" />
-          <input type="text" name="employees" />
-          <input type="text" name="interest" />
+      <!-- Custom selects in React are represented via hidden inputs -->
+      <input type="text" name="locations" />
+      <input type="text" name="employees" />
+      <input type="text" name="interest" />
 
-          <textarea name="message"></textarea>
-        </form>
-      <script type="module" src="/src/main.tsx"></script>
-    </body>
-  </html>
-  
+      <textarea name="message"></textarea>
+    </form>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -118,21 +118,21 @@ export default function BlogPost() {
           {/* Article Content */}
           <div className="prose prose-lg max-w-none">
             <p className="text-xl text-neutral-700 leading-relaxed mb-6">
-              Restaurant scheduling is one of the most challenging aspects of restaurant management. 
-              Get it right, and you'll have happy staff, controlled labor costs, and excellent service. 
+              Restaurant scheduling is one of the most challenging aspects of restaurant management.
+              Get it right, and you'll have happy staff, controlled labor costs, and excellent service.
               Get it wrong, and you'll face high turnover, budget overruns, and frustrated customers.
             </p>
 
             <p className="text-neutral-700 mb-6">
-              In this comprehensive guide, we'll walk you through everything you need to know about 
+              In this comprehensive guide, we'll walk you through everything you need to know about
               modern restaurant scheduling, from foundational principles to cutting-edge AI-powered tools.
             </p>
 
             <h2 className="text-neutral-900 mt-12 mb-6">Why Restaurant Scheduling Matters</h2>
-            
+
             <p className="text-neutral-700 mb-6">
-              Labor costs typically represent 25-35% of a restaurant's total costs, making it one of your 
-              largest expenses. But it's not just about the numbers—poor scheduling affects every aspect 
+              Labor costs typically represent 25-35% of a restaurant's total costs, making it one of your
+              largest expenses. But it's not just about the numbers—poor scheduling affects every aspect
               of your business:
             </p>
 
@@ -155,46 +155,46 @@ export default function BlogPost() {
 
             <h3 className="text-neutral-900 mt-8 mb-4">1. Start with Accurate Forecasting</h3>
             <p className="text-neutral-700 mb-6">
-              The foundation of great scheduling is knowing how busy you'll be. Use historical sales data, 
-              reservation systems, and local event calendars to predict traffic. Most modern POS systems 
+              The foundation of great scheduling is knowing how busy you'll be. Use historical sales data,
+              reservation systems, and local event calendars to predict traffic. Most modern POS systems
               can generate these forecasts automatically.
             </p>
 
             <h3 className="text-neutral-900 mt-8 mb-4">2. Know Your Labor Cost Targets</h3>
             <p className="text-neutral-700 mb-6">
-              Establish clear labor cost percentage targets for different dayparts. Fine dining might run 
-              30-35%, while quick service should aim for 25-30%. Track sales per labor hour (SPLH) as your 
+              Establish clear labor cost percentage targets for different dayparts. Fine dining might run
+              30-35%, while quick service should aim for 25-30%. Track sales per labor hour (SPLH) as your
               primary efficiency metric.
             </p>
 
             <h3 className="text-neutral-900 mt-8 mb-4">3. Cross-Train Your Team</h3>
             <p className="text-neutral-700 mb-6">
-              The more skills your team members have, the more flexible your scheduling becomes. A server 
-              who can also bartend or a line cook who can work multiple stations gives you crucial 
+              The more skills your team members have, the more flexible your scheduling becomes. A server
+              who can also bartend or a line cook who can work multiple stations gives you crucial
               scheduling options.
             </p>
 
             <h3 className="text-neutral-900 mt-8 mb-4">4. Respect Employee Availability</h3>
             <p className="text-neutral-700 mb-6">
-              Consistently ignoring availability preferences is a fast track to turnover. Use scheduling 
+              Consistently ignoring availability preferences is a fast track to turnover. Use scheduling
               software that captures and respects availability while still meeting business needs.
             </p>
 
             <h3 className="text-neutral-900 mt-8 mb-4">5. Build Schedules in Advance</h3>
             <p className="text-neutral-700 mb-6">
-              Publish schedules at least two weeks in advance. This shows respect for your team's time 
+              Publish schedules at least two weeks in advance. This shows respect for your team's time
               and dramatically reduces no-shows and last-minute conflicts.
             </p>
 
             <h3 className="text-neutral-900 mt-8 mb-4">6. Make Shift Swaps Easy</h3>
             <p className="text-neutral-700 mb-6">
-              Life happens. Having a simple, transparent process for shift swaps empowers your team and 
+              Life happens. Having a simple, transparent process for shift swaps empowers your team and
               reduces your management burden. Modern tools like WhatsApp integration make this seamless.
             </p>
 
             <h3 className="text-neutral-900 mt-8 mb-4">7. Track and Optimize Continuously</h3>
             <p className="text-neutral-700 mb-6">
-              Review your scheduling performance weekly. Compare actual labor costs to targets, track 
+              Review your scheduling performance weekly. Compare actual labor costs to targets, track
               overtime, monitor no-show rates, and adjust your approach based on data.
             </p>
 
@@ -223,7 +223,7 @@ export default function BlogPost() {
             <h2 className="text-neutral-900 mt-12 mb-6">The Role of Technology in Modern Scheduling</h2>
 
             <p className="text-neutral-700 mb-6">
-              While manual scheduling with spreadsheets might work for very small operations, technology 
+              While manual scheduling with spreadsheets might work for very small operations, technology
               dramatically improves efficiency and accuracy for most restaurants. Modern scheduling tools offer:
             </p>
 
@@ -269,15 +269,15 @@ export default function BlogPost() {
             <div className="bg-primary-50 border-l-4 border-primary-600 rounded-r-xl p-8 my-12">
               <h3 className="text-neutral-900 mb-4">Key Takeaway</h3>
               <p className="text-neutral-700">
-                Great restaurant scheduling isn't about perfection—it's about having a systematic approach 
-                that balances business needs with employee wellbeing. The restaurants that get this right 
+                Great restaurant scheduling isn't about perfection—it's about having a systematic approach
+                that balances business needs with employee wellbeing. The restaurants that get this right
                 enjoy lower turnover, better service, and healthier profit margins.
               </p>
             </div>
 
             <p className="text-neutral-700">
-              If you're ready to transform your scheduling process, modern tools like Mizan AI can help you 
-              implement these best practices automatically, saving you hours each week while improving both 
+              If you're ready to transform your scheduling process, modern tools like Mizan AI can help you
+              implement these best practices automatically, saving you hours each week while improving both
               labor efficiency and employee satisfaction.
             </p>
           </div>
@@ -293,8 +293,8 @@ export default function BlogPost() {
               <div>
                 <h4 className="text-neutral-900 mb-1">About {post.author.name}</h4>
                 <p className="text-neutral-600 mb-4">
-                  Jennifer is the Operations Director at Mizan AI with over 15 years of experience in 
-                  restaurant management. She's helped hundreds of restaurants optimize their operations 
+                  Jennifer is the Operations Director at Mizan AI with over 15 years of experience in
+                  restaurant management. She's helped hundreds of restaurants optimize their operations
                   and has a passion for data-driven decision making.
                 </p>
                 <div className="flex space-x-3">
@@ -315,7 +315,7 @@ export default function BlogPost() {
       <section className="section-padding bg-neutral-50">
         <div className="container-custom max-w-4xl">
           <h2 className="text-neutral-900 mb-8">Related Articles</h2>
-          
+
           <div className="grid md:grid-cols-3 gap-6">
             {relatedPosts.map((relatedPost) => (
               <Link
@@ -345,7 +345,7 @@ export default function BlogPost() {
             <p className="text-xl text-primary-100 mb-8">
               Join 5,000+ restaurant operators receiving weekly tips and strategies
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <Input
                 type="email"

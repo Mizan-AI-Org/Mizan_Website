@@ -6,6 +6,8 @@ import Pricing from "./routes/pricing";
 import Contact from "./routes/contact";
 import ComingSoon from "./routes/coming-soon";
 import Privacy from "./routes/privacy";
+import { Analytics } from "@vercel/analytics/react";
+import React from "react";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -52,39 +54,48 @@ export default function App() {
   }, []);
 
   // Render appropriate page
-  if (currentPage === "features") {
-    return <Features />;
-  }
+  const renderPage = () => {
+    if (currentPage === "features") {
+      return <Features />;
+    }
 
-  if (currentPage === "pricing") {
-    return <Pricing />;
-  }
+    if (currentPage === "pricing") {
+      return <Pricing />;
+    }
 
-  if (currentPage === "contact") {
-    return <Contact />;
-  }
+    if (currentPage === "contact") {
+      return <Contact />;
+    }
 
-  if (currentPage === "privacy") {
-    return <Privacy />;
-  }
+    if (currentPage === "privacy") {
+      return <Privacy />;
+    }
 
-  if (currentPage === "case-studies") {
-    return (
-      <ComingSoon
-        title="Case Studies Coming Soon"
-        description="We're working hard to bring you inspiring success stories from restaurants that have transformed their operations with Mizan. Check back soon!"
-      />
-    );
-  }
+    if (currentPage === "case-studies") {
+      return (
+        <ComingSoon
+          title="Case Studies Coming Soon"
+          description="We're working hard to bring you inspiring success stories from restaurants that have transformed their operations with Mizan. Check back soon!"
+        />
+      );
+    }
 
-  if (currentPage === "blog") {
-    return (
-      <ComingSoon
-        title="Blog Coming Soon"
-        description="Our blog is on its way! Soon you'll find expert insights, industry trends, and best practices for restaurant management. Stay tuned!"
-      />
-    );
-  }
+    if (currentPage === "blog") {
+      return (
+        <ComingSoon
+          title="Blog Coming Soon"
+          description="Our blog is on its way! Soon you'll find expert insights, industry trends, and best practices for restaurant management. Stay tuned!"
+        />
+      );
+    }
 
-  return <Index />;
+    return <Index />;
+  };
+
+  return (
+    <>
+      {renderPage()}
+      <Analytics />
+    </>
+  );
 }
