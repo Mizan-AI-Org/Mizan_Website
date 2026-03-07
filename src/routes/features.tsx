@@ -1,53 +1,49 @@
 import { motion } from 'motion/react';
 import {
-  TrendingUp,
-  DollarSign,
-  BarChart3,
-  Target,
-  Trash2,
-  Calendar,
-  MessageSquare,
   CheckCircle,
-  Users,
-  Award,
-  Network,
   ArrowRight,
   Sparkles,
 } from 'lucide-react';
 import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
 
+function WhatsAppIcon({ size = 24, className = '' }: { size?: number; className?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  );
+}
+
 export default function Features() {
   const ownerFeatures = [
     {
       category: 'AI-Powered Business Intelligence',
       description: 'Make data-driven decisions to directly increase margins and reduce loss.',
-      icon: BarChart3,
+      emoji: '📊',
       image: '/images/features/analytics_v2.png',
-      iconColor: 'text-emerald-600',
-      iconBg: 'bg-emerald-100',
+      accentColor: 'emerald',
       features: [
         {
           name: 'Profitability Dashboard',
           description: 'Real-time view of food cost, labor cost, prime cost.',
         },
         {
-          name: 'Menu Engineering',
-          description: 'Identifies top & bottom performers by profit and popularity.',
+          name: 'Centralized Document Hub',
+          description: 'Store manuals, training videos, and compliance docs.',
         },
         {
-          name: 'Waste Tracking & Prediction',
-          description: 'AI forecasts demand to reduce spoilage and over-ordering.',
+          name: 'Geolocation Clock-In/Out',
+          description: 'Clock-in/out directly with your restaurant location.',
         },
       ],
     },
     {
       category: 'Labor & Cost Optimization',
       description: 'Control your largest controllable cost. Save management time and avoid costly penalties.',
-      icon: DollarSign,
+      emoji: '💰',
       image: '/images/features/scheduling_v2.png',
-      iconColor: 'text-amber-600',
-      iconBg: 'bg-amber-100',
+      accentColor: 'amber',
       features: [
         {
           name: 'AI Staff Scheduling',
@@ -66,10 +62,9 @@ export default function Features() {
     {
       category: 'Operational Command Center',
       description: 'Replace chaos with clarity. Have a single source of truth for your entire operation.',
-      icon: Target,
+      emoji: '🎯',
       image: '/images/features/ops_hub_v2.png',
-      iconColor: 'text-emerald-600',
-      iconBg: 'bg-emerald-100',
+      accentColor: 'emerald',
       features: [
         {
           name: 'Unified Inbox',
@@ -80,8 +75,8 @@ export default function Features() {
           description: 'Ensure consistent opening, closing, and safety procedures.',
         },
         {
-          name: 'Centralized Document Hub',
-          description: 'Store manuals, training videos, and compliance docs.',
+          name: 'Connect to your Booking system',
+          description: 'Sync bookings and reservations directly to your system.',
         },
       ],
     },
@@ -91,10 +86,9 @@ export default function Features() {
     {
       category: 'WhatsApp-First Staff Hub',
       description: 'Zero training. Use the tool they already have (WhatsApp) to save time and reduce friction.',
-      icon: MessageSquare,
+      icon: WhatsAppIcon,
       image: '/images/features/whatsapp_v2.png',
-      iconColor: 'text-emerald-600',
-      iconBg: 'bg-emerald-100',
+      accentColor: 'emerald',
       features: [
         {
           name: 'Clock In/Out via WhatsApp',
@@ -113,10 +107,9 @@ export default function Features() {
     {
       category: 'Intelligent Scheduling & Communication',
       description: 'Empowers staff with clarity, improves team coordination, and reduces miscommunication.',
-      icon: Calendar,
+      emoji: '📅',
       image: '/images/features/scheduling_comm_v2.png',
-      iconColor: 'text-amber-600',
-      iconBg: 'bg-amber-100',
+      accentColor: 'amber',
       features: [
         {
           name: 'Personalized Shift Alerts',
@@ -135,10 +128,9 @@ export default function Features() {
     {
       category: 'Performance & Engagement',
       description: 'Increases staff satisfaction, motivation, and retention by providing visibility and growth.',
-      icon: Award,
+      emoji: '🏆',
       image: '/images/features/performance_v2.png',
-      iconColor: 'text-emerald-600',
-      iconBg: 'bg-emerald-100',
+      accentColor: 'emerald',
       features: [
         {
           name: 'Personal Performance Stats',
@@ -166,10 +158,10 @@ export default function Features() {
   ];
 
   const valueProps = [
-    { icon: TrendingUp, text: 'Cut labor costs with AI scheduling' },
-    { icon: Trash2, text: 'Reduce waste by 15%+ with predictive ordering' },
-    { icon: Users, text: 'Achieve 100% staff adoption with WhatsApp-first interface' },
-    { icon: BarChart3, text: 'Make decisions with a unified dashboard, not guesswork' },
+    { emoji: '💰', text: 'Cut labor costs with AI optimized scheduling' },
+    { emoji: '♻️', text: 'Reduce waste with predictive ordering' },
+    { emoji: '💬', text: 'Achieve 100% staff adoption with WhatsApp-first interface' },
+    { emoji: '📊', text: 'Make decisions with a unified dashboard, not guesswork' },
   ];
 
   return (
@@ -235,8 +227,8 @@ export default function Features() {
                     className="bg-white rounded-xl p-4 border border-neutral-200 shadow-sm hover:shadow-md hover:border-primary-200 transition-all duration-300"
                   >
                     <div className="flex items-start space-x-3 leading-5">
-                      <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <prop.icon className="text-primary-600" size={20} />
+                      <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center flex-shrink-0 text-xl">
+                        {prop.emoji}
                       </div>
                       <p className="text-xs text-neutral-700 text-left font-medium">{prop.text}</p>
                     </div>
@@ -267,8 +259,12 @@ export default function Features() {
                   <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8 mb-8">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-3">
-                        <div className={`w-12 h-12 ${section.iconBg} rounded-xl flex items-center justify-center flex-shrink-0`}>
-                          <section.icon className={section.iconColor} size={24} />
+                        <div className={`w-12 h-12 ${section.accentColor === 'amber' ? 'bg-amber-100' : 'bg-emerald-100'} rounded-xl flex items-center justify-center flex-shrink-0 ${'icon' in section && section.icon ? '' : 'text-2xl'}`}>
+                          {'icon' in section && section.icon ? (
+                            <section.icon className={section.accentColor === 'amber' ? 'text-amber-600' : 'text-emerald-600'} size={24} />
+                          ) : (
+                            section.emoji
+                          )}
                         </div>
                         <h3 className="text-xl font-black text-neutral-900 tracking-tight">{section.category}</h3>
                       </div>
@@ -286,40 +282,32 @@ export default function Features() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 flex-1 items-stretch">
-                    {section.features.map((feature, featureIndex) => (
-                      <motion.div
-                        key={featureIndex}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: featureIndex * 0.1 }}
-                        className={`bg-white rounded-xl p-3 border border-neutral-200/80 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 group w-full min-w-0 h-full overflow-hidden flex flex-col ${
-                          section.iconColor.includes('amber') 
-                            ? 'hover:border-amber-300 hover:shadow-amber-900/5' 
-                            : 'hover:border-emerald-300 hover:shadow-emerald-900/5'
-                        }`}
-                      >
-                        <div className="flex items-start gap-1.5 w-full min-w-0 flex-1 h-full leading-5">
-                          <div className={`w-4 h-4 flex-shrink-0 rounded-full flex items-center justify-center mt-0.5 shadow-inner transition-all duration-300 ${
-                            section.iconColor.includes('amber')
-                              ? 'bg-amber-100 group-hover:bg-amber-500 group-hover:-rotate-12'
-                              : 'bg-emerald-100 group-hover:bg-emerald-500 group-hover:rotate-12'
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    className={`bg-white rounded-xl p-4 border border-neutral-200/80 shadow-sm flex-1 ${
+                      section.accentColor === 'amber' ? 'hover:border-amber-300' : 'hover:border-emerald-300'
+                    } transition-colors duration-300`}
+                  >
+                    <div className="space-y-3">
+                      {section.features.map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex items-start gap-2.5">
+                          <div className={`w-5 h-5 flex-shrink-0 rounded-full flex items-center justify-center mt-0.5 ${
+                            section.accentColor === 'amber' ? 'bg-amber-100' : 'bg-emerald-100'
                           }`}>
-                            <CheckCircle className={`${
-                              section.iconColor.includes('amber') ? 'text-amber-600' : 'text-emerald-600'
-                            } group-hover:text-white transition-colors`} size={8} />
+                            <CheckCircle className={
+                              section.accentColor === 'amber' ? 'text-amber-600' : 'text-emerald-600'
+                            } size={10} />
                           </div>
-                          <div className="min-w-0 flex-1 overflow-hidden flex flex-col">
-                            <h4 className={`font-bold text-neutral-900 mb-0.5 group-hover:transition-colors uppercase text-[9px] tracking-widest hyphens-none [text-wrap:balance] break-words leading-tight flex-shrink-0 ${
-                              section.iconColor.includes('amber') ? 'group-hover:text-amber-700' : 'group-hover:text-emerald-700'
-                            }`}>{feature.name}</h4>
-                            <p className="text-neutral-600 text-[11px] leading-tight break-words flex-1 min-h-0">{feature.description}</p>
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-bold text-neutral-900 text-sm leading-tight">{feature.name}</h4>
+                            <p className="text-neutral-500 text-xs leading-relaxed">{feature.description}</p>
                           </div>
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  </motion.div>
                 </motion.div>
               ))}
             </div>
@@ -353,19 +341,19 @@ export default function Features() {
                   step: '1',
                   title: 'Connect Your Systems',
                   description: 'Link your POS, payroll, and existing tools. Our team handles the setup.',
-                  icon: Network,
+                  emoji: '🔌',
                 },
                 {
                   step: '2',
                   title: 'Onboard Your Team',
                   description: 'Staff receive WhatsApp invites and start using Mizan immediately. Zero training needed.',
-                  icon: Users,
+                  emoji: '👥',
                 },
                 {
                   step: '3',
                   title: 'Optimize & Grow',
                   description: 'Watch real-time insights, reduce costs, and improve operations from day one.',
-                  icon: TrendingUp,
+                  emoji: '🚀',
                 },
               ].map((item, index) => (
                 <motion.div
@@ -380,8 +368,8 @@ export default function Features() {
                     <div className="w-10 h-10 bg-primary-600 text-white rounded-full flex items-center justify-center text-base font-black mb-4">
                       {item.step}
                     </div>
-                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
-                      <item.icon className="text-primary-600" size={24} strokeWidth={2} />
+                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4 text-2xl">
+                      {item.emoji}
                     </div>
                     <h3 className="text-base font-bold text-neutral-900 mb-3 tracking-tight">
                       {item.title}

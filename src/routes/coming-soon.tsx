@@ -1,5 +1,4 @@
 import { motion } from 'motion/react';
-import { Construction } from 'lucide-react';
 import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
 
@@ -30,8 +29,8 @@ export default function ComingSoon({ title, description }: ComingSoonProps) {
             transition={{ duration: 0.6 }}
             className="max-w-2xl mx-auto text-center"
           >
-            <div className="inline-flex items-center justify-center w-24 h-24 bg-primary-100 rounded-full mb-8">
-              <Construction className="w-12 h-12 text-primary-600" />
+            <div className="inline-flex items-center justify-center w-24 h-24 bg-primary-100 rounded-full mb-8 text-5xl">
+              🚧
             </div>
 
             <h1 className="text-neutral-900 mb-4">

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { Check, X, ArrowRight, HelpCircle } from 'lucide-react';
+import { Check, X, ArrowRight } from 'lucide-react';
 import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
 import {

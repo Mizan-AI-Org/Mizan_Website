@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 import { motion } from 'motion/react';
-import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
+import { Send, CheckCircle2 } from 'lucide-react';
 import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
 import { Input } from '../components/ui/input';
@@ -27,16 +27,41 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage(null);
-    setIsSubmitting(true);
 
     const form = e.currentTarget;
+
+    // Validate required selects (hidden inputs mirror React state)
+    if (!locations || !employees || !interest) {
+      setErrorMessage('Please fill in all required fields (Number of Locations, Employees, and Interest).');
+      return;
+    }
+
+    setIsSubmitting(true);
+
     const formData = new FormData(form);
 
+    // Build URL-encoded body (FormData values can be string or File)
+    const params = new URLSearchParams();
+    formData.forEach((value, key) => {
+      params.append(key, typeof value === 'string' ? value : (value as File).name);
+    });
+
+    const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
+    const url = formspreeId
+      ? `https://formspree.io/f/${formspreeId}`
+      : (window.location.pathname || '/');
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    if (formspreeId) {
+      headers['Accept'] = 'application/json';
+    }
+
     try {
-      const response = await fetch('/', {
+      const response = await fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
+        headers,
+        body: params.toString(),
       });
 
       if (response.ok) {
@@ -46,9 +71,12 @@ export default function Contact() {
         setEmployees('');
         setInterest('');
       } else {
+        const text = await response.text();
+        console.error('Form submission failed:', response.status, text);
         setErrorMessage('Something went wrong. Please try again or contact us directly.');
       }
-    } catch {
+    } catch (err) {
+      console.error('Form submission error:', err);
       setErrorMessage('Network error. Please check your connection and try again.');
     } finally {
       setIsSubmitting(false);
@@ -258,8 +286,8 @@ export default function Contact() {
 
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4 leading-5">
-                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Mail className="text-primary-600" size={20} />
+                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl">
+                      ✉️
                     </div>
                     <div>
                       <h4 className="text-neutral-900 mb-1">Email</h4>
@@ -268,8 +296,8 @@ export default function Contact() {
                   </div>
 
                   <div className="flex items-start space-x-4 leading-5">
-                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Phone className="text-primary-600" size={20} />
+                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl">
+                      📞
                     </div>
                     <div>
                       <h4 className="text-neutral-900 mb-1">Phone</h4>
@@ -279,8 +307,8 @@ export default function Contact() {
                   </div>
 
                   <div className="flex items-start space-x-4 leading-5">
-                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <MapPin className="text-primary-600" size={20} />
+                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl">
+                      📍
                     </div>
                     <div>
                       <h4 className="text-neutral-900 mb-1">Office</h4>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import {
-  CheckCircle,
   Star,
   ArrowRight
 } from 'lucide-react';
@@ -101,19 +100,19 @@ export default function Index() {
       quote: "Mizan completely transformed how we manage our restaurant operations and staff scheduling. What used to take hours now takes minutes.",
       author: "Hamza Hadni",
       role: "Owner, Barometře, Marrakesh",
-      image: ""
+      image: "/images/hamza.png"
     },
     {
       quote: "Our staff turnover dropped by 40% since implementing Mizan. The team loves the WhatsApp integration.",
       author: "Mohammed Al-Habib",
       role: "General Manager, Coastal Kitchen",
-      image: ""
+      image: "/images/mohammed.png"
     },
     {
       quote: "The performance insights helped us identify and fix issues we didn't even know existed. ROI in the first month.",
       author: "Imran Haidar",
       role: "General Manager, Ima Restaurant, Benguerir",
-      image: ""
+      image: "/images/imran.png"
     },
   ];
 
@@ -294,7 +293,7 @@ export default function Index() {
           >
             <h2 className="text-neutral-900 mb-4">Loved by restaurant operators across MENA</h2>
             <p className="text-xl text-neutral-600">
-              Join hundreds of restaurants already saving time and money with Mizan
+              Join hundreds of restaurants already saving time and money with Mizan AI
             </p>
           </motion.div>
 
@@ -342,7 +341,7 @@ export default function Index() {
           >
             <h2 className="text-white mb-6">Ready to transform your restaurant operations?</h2>
             <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-              Join 10+ restaurants already saving time and boosting profits with Mizan
+              Join 10+ restaurants already saving time and boosting profits with Mizan AI
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
