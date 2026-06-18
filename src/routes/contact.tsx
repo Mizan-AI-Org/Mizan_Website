@@ -268,7 +268,15 @@ export default function Contact() {
                   </button>
 
                   <p className="text-sm text-neutral-500 text-center">
-                    By submitting this form, you agree to our privacy policy
+                    By submitting this form, you agree to our{" "}
+                    <a href="#privacy" className="text-primary-600 hover:underline">
+                      Privacy Policy
+                    </a>{" "}
+                    and{" "}
+                    <a href="#terms" className="text-primary-600 hover:underline">
+                      Terms of Service
+                    </a>
+                    .
                   </p>
                 </form>
               )}

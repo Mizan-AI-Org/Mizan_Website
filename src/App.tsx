@@ -6,6 +6,7 @@ import Pricing from "./routes/pricing";
 import Contact from "./routes/contact";
 import ComingSoon from "./routes/coming-soon";
 import Privacy from "./routes/privacy";
+import Terms from "./routes/terms";
 import { Analytics } from "@vercel/analytics/react";
 import React from "react";
 
@@ -30,6 +31,8 @@ export default function App() {
         setCurrentPage("blog");
       } else if (hash === "privacy") {
         setCurrentPage("privacy");
+      } else if (hash === "terms") {
+        setCurrentPage("terms");
       } else if (hash === "case-studies") {
         setCurrentPage("case-studies");
       } else if (hash === "blog") {
@@ -69,6 +72,10 @@ export default function App() {
 
     if (currentPage === "privacy") {
       return <Privacy />;
+    }
+
+    if (currentPage === "terms") {
+      return <Terms />;
     }
 
     if (currentPage === "case-studies") {
