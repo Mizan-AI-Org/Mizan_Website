@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 import { motion } from 'motion/react';
-import { Send, CheckCircle2 } from 'lucide-react';
+import { Send, CheckCircle2, Mail, Phone, MapPin, Check } from 'lucide-react';
 import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
 import { Input } from '../components/ui/input';
@@ -21,7 +21,6 @@ export default function Contact() {
   const [interest, setInterest] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  // Inline error feedback instead of browser alert popups
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,7 +29,6 @@ export default function Contact() {
 
     const form = e.currentTarget;
 
-    // Validate required selects (hidden inputs mirror React state)
     if (!locations || !employees || !interest) {
       setErrorMessage('Please fill in all required fields (Number of Locations, Employees, and Interest).');
       return;
@@ -40,7 +38,6 @@ export default function Contact() {
 
     const formData = new FormData(form);
 
-    // Build URL-encoded body (FormData values can be string or File)
     const params = new URLSearchParams();
     formData.forEach((value, key) => {
       params.append(key, typeof value === 'string' ? value : (value as File).name);
@@ -87,125 +84,127 @@ export default function Contact() {
     <div className="min-h-screen bg-white">
       <Navigation />
 
-      {/* Hero */}
-      <section className="pt-32 pb-20 md:pt-40 md:pb-25 bg-gradient-to-br from-neutral-50 to-primary-50/30">
-        <div className="container-custom text-center">
+      <section className="contact-page">
+        <div className="container-custom">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
+            className="contact-page__intro"
           >
-            <h1 className="text-neutral-900 mb-6">Let's talk about your restaurant</h1>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto">
-              Whether you're ready to start a free trial or want to see a personalized demo, we're here to help
+            <h1>Let's talk about your business</h1>
+            <p>
+              Ready for a free trial or a personalized demo? Reach out and we'll help you get started.
             </p>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Contact Form & Info */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Contact Form */}
+          <div className="contact-page__layout">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.08 }}
+              className="contact-form-panel"
             >
-              <h2 className="text-neutral-900 mb-6">Get in touch</h2>
+              <h2>Get in touch</h2>
 
               {showSuccess ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="bg-primary-50 border border-primary-100 rounded-2xl p-8 text-center"
-                  aria-live="polite" role="status"
+                  className="contact-success"
+                  aria-live="polite"
+                  role="status"
                 >
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                    className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6"
+                    transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                    className="contact-success__icon"
                   >
-                    <CheckCircle2 className="text-primary-600 w-10 h-10" />
+                    <CheckCircle2 size={36} />
                   </motion.div>
-                  <h3 className="text-neutral-900 mb-4">Message Sent Successfully!</h3>
-                  <p className="text-neutral-600 mb-6">
-                    Thank you for reaching out. We've received your inquiry and our team will get back to you within 5 minutes.
+                  <h3>Message sent successfully</h3>
+                  <p>
+                    Thank you for reaching out. We've received your inquiry and our team will get back
+                    to you shortly.
                   </p>
                   <button
+                    type="button"
                     onClick={() => {
                       setShowSuccess(false);
                       setErrorMessage(null);
                     }}
-                    className="text-primary-600 font-semibold hover:text-primary-700 transition-colors"
                   >
                     Send another message
                   </button>
                 </motion.div>
               ) : (
                 <form
-                  className="space-y-6"
+                  className="contact-form"
                   name="contact"
                   method="POST"
                   data-netlify="true"
                   netlify-honeypot="bot-field"
                   onSubmit={handleSubmit}
                 >
-                  {/* Inline error banner shown when submission fails */}
                   {errorMessage && (
-                    <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-red-700" role="alert" aria-live="assertive">
+                    <div className="contact-form__error" role="alert" aria-live="assertive">
                       {errorMessage}
                     </div>
                   )}
                   <input type="hidden" name="form-name" value="contact" />
-                  {/* These hidden inputs mirror custom Selects so Netlify receives real values */}
                   <input type="hidden" name="locations" value={locations} required />
                   <input type="hidden" name="employees" value={employees} required />
                   <input type="hidden" name="interest" value={interest} required />
-                  {/* Honeypot */}
                   <p hidden>
-                    <label>Don't fill this out: <input name="bot-field" /></label>
+                    <label>
+                      Don't fill this out: <input name="bot-field" />
+                    </label>
                   </p>
 
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
+                  <div className="contact-form__row">
+                    <div className="contact-form__field">
                       <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" name="firstName" placeholder="John" className="mt-2" required />
+                      <Input id="firstName" name="firstName" placeholder="John" required />
                     </div>
-                    <div>
+                    <div className="contact-form__field">
                       <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" name="lastName" placeholder="Doe" className="mt-2" required />
+                      <Input id="lastName" name="lastName" placeholder="Doe" required />
                     </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" name="email" type="email" placeholder="john@restaurant.com" className="mt-2" required />
+                  <div className="contact-form__row">
+                    <div className="contact-form__field">
+                      <Label htmlFor="email">Email</Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="john@company.com"
+                        required
+                      />
+                    </div>
+                    <div className="contact-form__field">
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        placeholder="+1 (555) 000-0000"
+                        pattern="^[+()\-\s\d]{7,}$"
+                      />
+                    </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="+1 (555) 000-0000"
-                      className="mt-2"
-                      pattern="^[+()\-\s\d]{7,}$"
-                    />
+                  <div className="contact-form__field">
+                    <Label htmlFor="businessName">Business Name</Label>
+                    <Input id="businessName" name="businessName" placeholder="Your Business" />
                   </div>
 
-                  <div>
-                    <Label htmlFor="restaurantName">Restaurant Name</Label>
-                    <Input id="restaurantName" name="restaurantName" placeholder="Your Restaurant" className="mt-2" />
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
+                  <div className="contact-form__row">
+                    <div className="contact-form__field">
                       <Label htmlFor="locations">Number of Locations</Label>
                       <Select value={locations} onValueChange={setLocations}>
-                        <SelectTrigger className="mt-2">
+                        <SelectTrigger>
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -216,10 +215,10 @@ export default function Contact() {
                         </SelectContent>
                       </Select>
                     </div>
-                    <div>
+                    <div className="contact-form__field">
                       <Label htmlFor="employees">Number of Employees</Label>
                       <Select value={employees} onValueChange={setEmployees}>
-                        <SelectTrigger className="mt-2">
+                        <SelectTrigger>
                           <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
@@ -232,10 +231,10 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  <div>
+                  <div className="contact-form__field">
                     <Label htmlFor="interest">What are you interested in?</Label>
                     <Select value={interest} onValueChange={setInterest}>
-                      <SelectTrigger className="mt-2">
+                      <SelectTrigger>
                         <SelectValue placeholder="Select..." />
                       </SelectTrigger>
                       <SelectContent>
@@ -248,161 +247,135 @@ export default function Contact() {
                     </Select>
                   </div>
 
-                  <div>
+                  <div className="contact-form__field">
                     <Label htmlFor="message">Message</Label>
                     <Textarea
                       id="message"
                       name="message"
-                      placeholder="Tell us about your restaurant and what you're looking for..."
-                      className="mt-2 min-h-[120px]"
+                      placeholder="Tell us about your business and what you're looking for..."
+                      className="contact-form__message"
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-primary-600 text-white px-8 py-4 rounded-lg hover:bg-primary-700 transition-colors inline-flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
-                    {!isSubmitting && <Send size={20} />}
+                  <button type="submit" disabled={isSubmitting} className="contact-form__submit">
+                    <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+                    {!isSubmitting && <Send size={18} />}
                   </button>
 
-                  <p className="text-sm text-neutral-500 text-center">
-                    By submitting this form, you agree to our{" "}
-                    <a href="#privacy" className="text-primary-600 hover:underline">
-                      Privacy Policy
-                    </a>{" "}
-                    and{" "}
-                    <a href="#terms" className="text-primary-600 hover:underline">
-                      Terms of Service
-                    </a>
-                    .
+                  <p className="contact-form__legal">
+                    By submitting this form, you agree to our{' '}
+                    <a href="#privacy">Privacy Policy</a> and <a href="#terms">Terms of Service</a>.
                   </p>
                 </form>
               )}
             </motion.div>
 
-            {/* Contact Info */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 }}
-              className="space-y-8"
+            <motion.aside
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.12 }}
+              className="contact-aside"
             >
-              <div>
-                <h3 className="text-neutral-900 mb-6">Contact Information</h3>
-
-                <div className="space-y-6">
-                  <div className="flex items-start space-x-4 leading-5">
-                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl">
-                      ✉️
-                    </div>
+              <div className="contact-aside__card">
+                <h3>Contact information</h3>
+                <ul className="contact-aside__list">
+                  <li>
+                    <span className="contact-aside__icon">
+                      <Mail size={18} />
+                    </span>
                     <div>
-                      <h4 className="text-neutral-900 mb-1">Email</h4>
-                      <p className="text-neutral-600">sales@heymizan.ai</p>
+                      <strong>Email</strong>
+                      <a href="mailto:sales@heymizan.ai">sales@heymizan.ai</a>
                     </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4 leading-5">
-                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl">
-                      📞
-                    </div>
+                  </li>
+                  <li>
+                    <span className="contact-aside__icon">
+                      <Phone size={18} />
+                    </span>
                     <div>
-                      <h4 className="text-neutral-900 mb-1">Phone</h4>
-                      <p className="text-neutral-600">+212 784476751</p>
-                      <p className="text-sm text-neutral-500">Mon-Fri, 9am-6pm EST</p>
+                      <strong>Phone</strong>
+                      <a href="tel:+212784476751">+212 784476751</a>
+                      <span>Mon-Fri, 9am-6pm EST</span>
                     </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4 leading-5">
-                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl">
-                      📍
-                    </div>
+                  </li>
+                  <li>
+                    <span className="contact-aside__icon">
+                      <MapPin size={18} />
+                    </span>
                     <div>
-                      <h4 className="text-neutral-900 mb-1">Office</h4>
-                      <p className="text-neutral-600">Marrakech, Morocco</p>
+                      <strong>Office</strong>
+                      <p>Marrakech, Morocco</p>
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-gradient-to-br from-neutral-50 to-primary-50/30 rounded-2xl p-8">
-                <h4 className="text-neutral-900 mb-4">Why choose Mizan?</h4>
-                <ul className="space-y-3">
-                  <li className="flex items-start space-x-3 leading-5">
-                    <div className="w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-white text-xs">✓</span>
-                    </div>
-                    <span className="text-neutral-700">14-day free trial with full features</span>
-                  </li>
-                  <li className="flex items-start space-x-3 leading-5">
-                    <div className="w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-white text-xs">✓</span>
-                    </div>
-                    <span className="text-neutral-700">Setup and training included</span>
-                  </li>
-                  <li className="flex items-start space-x-3 leading-5">
-                    <div className="w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-white text-xs">✓</span>
-                    </div>
-                    <span className="text-neutral-700">Dedicated customer success team</span>
-                  </li>
-                  <li className="flex items-start space-x-3 leading-5">
-                    <div className="w-6 h-6 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-white text-xs">✓</span>
-                    </div>
-                    <span className="text-neutral-700">No long-term contracts</span>
                   </li>
                 </ul>
               </div>
 
-              <div className="bg-primary-600 rounded-2xl p-8 text-white">
-                <h4 className="text-white mb-2">Response Time</h4>
-                <p className="text-primary-100 mb-4">
+              <div className="contact-aside__card contact-aside__card--muted">
+                <h3>Why choose Mizan?</h3>
+                <ul className="contact-aside__benefits">
+                  {[
+                    '14-day free trial with full features',
+                    'Setup and training included',
+                    'Dedicated customer success team',
+                    'No long-term contracts',
+                  ].map((item) => (
+                    <li key={item}>
+                      <Check size={16} />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="contact-aside__card contact-aside__card--accent">
+                <h3>Response time</h3>
+                <p>
                   We typically respond to all inquiries within 5 minutes during office hours.
                 </p>
-                <p className="text-primary-100">
-                  For urgent support needs, existing customers can reach us 24/7 on +212 784476751.
+                <p>
+                  Existing customers can reach us 24/7 on{' '}
+                  <a href="tel:+212784476751">+212 784476751</a> for urgent support.
                 </p>
               </div>
-            </motion.div>
+            </motion.aside>
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="section-padding bg-neutral-50">
+      <section className="contact-faq">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-neutral-900 mb-4">Quick Answers</h2>
-            <p className="text-xl text-neutral-600">
-              Frequently asked questions about getting started
-            </p>
+          <div className="contact-faq__intro">
+            <h2>Quick answers</h2>
+            <p>Frequently asked questions about getting started</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="contact-faq__grid">
             <div>
-              <h4 className="text-neutral-900 mb-2">How long does setup take?</h4>
-              <p className="text-neutral-600">
-                Most restaurants are up and running within 30 minutes. We handle the technical setup and provide training for your team.
+              <h4>How long does setup take?</h4>
+              <p>
+                Most businesses are up and running within 30 minutes. We handle the technical setup
+                and provide training for your team.
               </p>
             </div>
             <div>
-              <h4 className="text-neutral-900 mb-2">Do you integrate with my POS?</h4>
-              <p className="text-neutral-600">
-                We integrate with major POS systems including Toast, Square, Clover, and more. Contact us to confirm your specific system.
+              <h4>Do you integrate with my POS?</h4>
+              <p>
+                We integrate with major POS systems including Toast, Square, Clover, and more.
+                Contact us to confirm your specific system.
               </p>
             </div>
             <div>
-              <h4 className="text-neutral-900 mb-2">What if I need help after setup?</h4>
-              <p className="text-neutral-600">
-                You'll have access to our support team via email, chat, and phone. We also provide comprehensive documentation and training materials.
+              <h4>What if I need help after setup?</h4>
+              <p>
+                You'll have access to our support team via email, chat, and phone. We also provide
+                documentation and training materials.
               </p>
             </div>
             <div>
-              <h4 className="text-neutral-900 mb-2">Can I try before committing?</h4>
-              <p className="text-neutral-600">
-                Yes! Our 14-day free trial gives you full access to all features. No credit card required to start.
+              <h4>Can I try before committing?</h4>
+              <p>
+                Yes. Our 14-day free trial gives you full access to all features. No credit card
+                required to start.
               </p>
             </div>
           </div>

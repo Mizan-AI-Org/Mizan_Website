@@ -1,18 +1,36 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { CALENDLY_DEMO_URL } from '../lib/links';
+
+function isHomeRoute() {
+  const hash = window.location.hash.replace(/^#/, '');
+  const base = hash.split('/')[0];
+  return base === '' || base === 'home';
+}
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHome, setIsHome] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+    const syncRoute = () => setIsHome(isHomeRoute());
+    const onScroll = () => setIsScrolled(window.scrollY > 24);
+
+    syncRoute();
+    onScroll();
+
+    window.addEventListener('hashchange', syncRoute);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('hashchange', syncRoute);
+      window.removeEventListener('scroll', onScroll);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Transparent white-on-green nav only on the home hero; solid nav everywhere else
+  const useHeroNav = isHome && !isScrolled;
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -28,123 +46,87 @@ export function Navigation() {
   ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-        ? 'bg-white shadow-md'
-        : 'bg-gradient-to-r from-primary-600 to-primary-700'
-        }`}
-    >
+    <nav className={`site-nav ${useHeroNav ? 'site-nav--top' : 'site-nav--scrolled'}`}>
       <div className="container-custom">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <a href="#" className="flex items-center space-x-2" onClick={handleLogoClick}>
+        <div className="site-nav__inner">
+          <a href="#" className="site-nav__brand" onClick={handleLogoClick}>
             <img
-              src={isScrolled ? "/logo.png" : "/logo-white.png"}
+              src={useHeroNav ? '/logo-white.png' : '/logo.png'}
               alt="Mizan"
-              className="h-10 w-auto"
+              className="site-nav__logo"
               onError={(e) => {
-                // Fallback to regular logo if white version doesn't exist
-                (e.target as HTMLImageElement).src = "/logo.png";
+                (e.target as HTMLImageElement).src = '/logo.png';
               }}
             />
-            <span className="font-bold text-xl text-neutral-900">
-              Mizan AI
-            </span>
+            <span className="site-nav__brand-text">Mizan AI</span>
           </a>
 
-          {/* Desktop Navigation - Centered */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="site-nav__links">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`transition-colors font-medium ${isScrolled
-                  ? 'text-neutral-600 hover:text-primary-600'
-                  : 'text-white/90 hover:text-white'
-                  }`}
-              >
+              <a key={link.href} href={link.href} className="site-nav__link">
                 {link.name}
               </a>
             ))}
           </div>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="site-nav__actions">
             <a
-              href="#contact"
-              className={`transition-colors font-medium ${isScrolled
-                ? 'text-neutral-600 hover:text-primary-600'
-                : 'text-white/90 hover:text-white'
-                }`}
+              href={CALENDLY_DEMO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="site-nav__demo"
             >
               Book Demo
             </a>
-            <a
-              href="#contact"
-              className={`px-6 py-2.5 rounded-full font-semibold transition-all duration-300 ${isScrolled
-                ? 'bg-primary-600 text-white hover:bg-primary-700'
-                : 'bg-white text-primary-600 hover:bg-neutral-100'
-                }`}
-            >
+            <a href="#contact" className="site-nav__trial">
               Start Free Trial
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden ${isScrolled ? 'text-neutral-900' : 'text-white'}`}
+            type="button"
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+            className="site-nav__menu-btn"
             aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className={`md:hidden border-t ${isScrolled
-              ? 'bg-white border-neutral-200'
-              : 'bg-primary-700 border-white/20'
-              }`}
+            className="site-nav__mobile"
           >
-            <div className="container-custom py-4 space-y-4">
+            <div className="container-custom site-nav__mobile-inner">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className={`block transition-colors py-2 ${isScrolled
-                    ? 'text-neutral-600 hover:text-primary-600'
-                    : 'text-white/90 hover:text-white'
-                    }`}
+                  className="site-nav__mobile-link"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.name}
                 </a>
               ))}
-              <div className={`pt-4 space-y-3 border-t ${isScrolled ? 'border-neutral-200' : 'border-white/20'
-                }`}>
+              <div className="site-nav__mobile-actions">
                 <a
-                  href="#contact"
-                  className={`block text-center transition-colors py-2 ${isScrolled
-                    ? 'text-neutral-600 hover:text-primary-600'
-                    : 'text-white/90 hover:text-white'
-                    }`}
+                  href={CALENDLY_DEMO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="site-nav__demo"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Book Demo
                 </a>
                 <a
                   href="#contact"
-                  className={`block text-center px-6 py-2.5 rounded-full font-semibold transition-colors ${isScrolled
-                    ? 'bg-primary-600 text-white hover:bg-primary-700'
-                    : 'bg-white text-primary-600 hover:bg-neutral-100'
-                    }`}
+                  className="site-nav__trial"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Start Free Trial

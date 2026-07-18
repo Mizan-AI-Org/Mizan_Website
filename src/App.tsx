@@ -5,6 +5,7 @@ import Features from "./routes/features";
 import Pricing from "./routes/pricing";
 import Contact from "./routes/contact";
 import ComingSoon from "./routes/coming-soon";
+import CaseStudies from "./routes/case-studies._index";
 import Privacy from "./routes/privacy";
 import Terms from "./routes/terms";
 import { Analytics } from "@vercel/analytics/react";
@@ -19,30 +20,31 @@ export default function App() {
       const hash = window.location.hash.slice(1);
 
       // Prefer hash (in-app section/page links), then fallback to path
-      if (hash === "features") {
+      const baseHash = hash.split("/")[0];
+
+      if (baseHash === "features") {
         setCurrentPage("features");
-      } else if (hash === "pricing") {
+      } else if (baseHash === "pricing") {
         setCurrentPage("pricing");
-      } else if (hash === "contact") {
+      } else if (baseHash === "contact") {
         setCurrentPage("contact");
-      } else if (hash === "case-studies") {
+      } else if (baseHash === "case-studies") {
         setCurrentPage("case-studies");
-      } else if (hash === "blog") {
+      } else if (baseHash === "blog") {
         setCurrentPage("blog");
-      } else if (hash === "privacy") {
+      } else if (baseHash === "privacy") {
         setCurrentPage("privacy");
-      } else if (hash === "terms") {
+      } else if (baseHash === "terms") {
         setCurrentPage("terms");
-      } else if (hash === "case-studies") {
-        setCurrentPage("case-studies");
-      } else if (hash === "blog") {
-        setCurrentPage("blog");
       } else {
         setCurrentPage("home");
       }
 
-      // Scroll to top when page changes
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      // Scroll to top when switching top-level pages (not between case studies)
+      const isCaseStudyDetail = hash.startsWith("case-studies/");
+      if (!isCaseStudyDetail) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     };
 
     // Check initial navigation
@@ -79,19 +81,14 @@ export default function App() {
     }
 
     if (currentPage === "case-studies") {
-      return (
-        <ComingSoon
-          title="Case Studies Coming Soon"
-          description="We're working hard to bring you inspiring success stories from restaurants that have transformed their operations with Mizan. Check back soon!"
-        />
-      );
+      return <CaseStudies />;
     }
 
     if (currentPage === "blog") {
       return (
         <ComingSoon
           title="Blog Coming Soon"
-          description="Our blog is on its way! Soon you'll find expert insights, industry trends, and best practices for restaurant management. Stay tuned!"
+          description="Our blog is on its way! Soon you'll find expert insights, industry trends, and best practices for running operations on Mizan. Stay tuned!"
         />
       );
     }

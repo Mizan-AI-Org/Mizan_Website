@@ -1,11 +1,22 @@
+import type { ComponentType } from 'react';
 import { motion } from 'motion/react';
 import {
   CheckCircle,
-  ArrowRight,
   Sparkles,
+  ArrowRight,
+  BarChart3,
+  CalendarClock,
+  Layers,
+  MessageCircle,
+  Trophy,
+  Plug,
+  Users,
+  TrendingUp,
+  Recycle,
 } from 'lucide-react';
 import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
+import { CALENDLY_DEMO_URL } from '../lib/links';
 
 function WhatsAppIcon({ size = 24, className = '' }: { size?: number; className?: string }) {
   return (
@@ -15,14 +26,23 @@ function WhatsAppIcon({ size = 24, className = '' }: { size?: number; className?
   );
 }
 
+type FeatureSection = {
+  category: string;
+  description: string;
+  image: string;
+  accent: 'emerald' | 'amber';
+  Icon: ComponentType<{ size?: number; className?: string }>;
+  features: { name: string; description: string }[];
+};
+
 export default function Features() {
-  const ownerFeatures = [
+  const featureSections: FeatureSection[] = [
     {
       category: 'AI-Powered Business Intelligence',
       description: 'Make data-driven decisions to directly increase margins and reduce loss.',
-      emoji: '📊',
       image: '/images/features/analytics_v2.png',
-      accentColor: 'emerald',
+      accent: 'emerald',
+      Icon: BarChart3,
       features: [
         {
           name: 'Profitability Dashboard',
@@ -34,20 +54,21 @@ export default function Features() {
         },
         {
           name: 'Geolocation Clock-In/Out',
-          description: 'Clock-in/out directly with your restaurant location.',
+          description: 'Clock-in/out directly with your business location.',
         },
       ],
     },
     {
       category: 'Labor & Cost Optimization',
       description: 'Control your largest controllable cost. Save management time and avoid costly penalties.',
-      emoji: '💰',
       image: '/images/features/scheduling_v2.png',
-      accentColor: 'amber',
+      accent: 'amber',
+      Icon: CalendarClock,
       features: [
         {
           name: 'AI Staff Scheduling',
-          description: 'Auto-creates optimized schedules considering sales forecasts, staff rules, and labor budgets.',
+          description:
+            'Auto-creates optimized schedules considering sales forecasts, staff rules, and labor budgets.',
         },
         {
           name: 'Automated Time & Attendance',
@@ -62,9 +83,9 @@ export default function Features() {
     {
       category: 'Operational Command Center',
       description: 'Replace chaos with clarity. Have a single source of truth for your entire operation.',
-      emoji: '🎯',
       image: '/images/features/ops_hub_v2.png',
-      accentColor: 'emerald',
+      accent: 'emerald',
+      Icon: Layers,
       features: [
         {
           name: 'Unified Inbox',
@@ -80,15 +101,33 @@ export default function Features() {
         },
       ],
     },
-  ];
-
-  const staffFeatures = [
+    {
+      category: 'Performance & Engagement',
+      description: 'Increases staff satisfaction, motivation, and retention by providing visibility and growth.',
+      image: '/images/features/performance_v2.png',
+      accent: 'emerald',
+      Icon: Trophy,
+      features: [
+        {
+          name: 'Personal Performance Stats',
+          description: 'View own sales, tips, and task completion rates.',
+        },
+        {
+          name: 'Gamification & Recognition',
+          description: 'Badges and leaderboards for top performers.',
+        },
+        {
+          name: 'Micro-Training',
+          description: 'Receive daily 2-minute skill tips directly in WhatsApp.',
+        },
+      ],
+    },
     {
       category: 'WhatsApp-First Staff Hub',
       description: 'Zero training. Use the tool they already have (WhatsApp) to save time and reduce friction.',
-      icon: WhatsAppIcon,
       image: '/images/features/whatsapp_v2.png',
-      accentColor: 'emerald',
+      accent: 'emerald',
+      Icon: WhatsAppIcon,
       features: [
         {
           name: 'Clock In/Out via WhatsApp',
@@ -107,9 +146,9 @@ export default function Features() {
     {
       category: 'Intelligent Scheduling & Communication',
       description: 'Empowers staff with clarity, improves team coordination, and reduces miscommunication.',
-      emoji: '📅',
       image: '/images/features/scheduling_comm_v2.png',
-      accentColor: 'amber',
+      accent: 'amber',
+      Icon: MessageCircle,
       features: [
         {
           name: 'Personalized Shift Alerts',
@@ -117,7 +156,7 @@ export default function Features() {
         },
         {
           name: 'In-App Team Chat',
-          description: 'Role-based channels (Kitchen, Front-of-House) without sharing personal numbers.',
+          description: 'Role-based channels without sharing personal numbers.',
         },
         {
           name: 'Smart Shift Handover',
@@ -125,265 +164,167 @@ export default function Features() {
         },
       ],
     },
-    {
-      category: 'Performance & Engagement',
-      description: 'Increases staff satisfaction, motivation, and retention by providing visibility and growth.',
-      emoji: '🏆',
-      image: '/images/features/performance_v2.png',
-      accentColor: 'emerald',
-      features: [
-        {
-          name: 'Personal Performance Stats',
-          description: 'View own sales, tips, and task completion rates.',
-        },
-        {
-          name: 'Gamification & Recognition',
-          description: 'Badges and leaderboards for top performers.',
-        },
-        {
-          name: 'Micro-Training',
-          description: 'Receive daily 2-minute skill tips directly in WhatsApp.',
-        },
-      ],
-    },
-  ];
-
-  const combinedFeatures = [
-    ownerFeatures[0],
-    ownerFeatures[1],
-    ownerFeatures[2],
-    staffFeatures[2],
-    staffFeatures[0],
-    staffFeatures[1],
   ];
 
   const valueProps = [
-    { emoji: '💰', text: 'Cut labor costs with AI optimized scheduling' },
-    { emoji: '♻️', text: 'Reduce waste with predictive ordering' },
-    { emoji: '💬', text: 'Achieve 100% staff adoption with WhatsApp-first interface' },
-    { emoji: '📊', text: 'Make decisions with a unified dashboard, not guesswork' },
+    { Icon: CalendarClock, text: 'Cut labor costs with AI-optimized scheduling' },
+    { Icon: Recycle, text: 'Reduce waste with predictive ordering' },
+    { Icon: MessageCircle, text: 'Achieve staff adoption with WhatsApp-first workflows' },
+    { Icon: BarChart3, text: 'Make decisions from a unified dashboard, not guesswork' },
+  ];
+
+  const steps = [
+    {
+      step: '1',
+      title: 'Connect Your Systems',
+      description: 'Link your POS, payroll, and existing tools. Our team handles the setup.',
+      Icon: Plug,
+    },
+    {
+      step: '2',
+      title: 'Onboard Your Team',
+      description: 'Staff receive WhatsApp invites and start using Mizan immediately. Zero training needed.',
+      Icon: Users,
+    },
+    {
+      step: '3',
+      title: 'Optimize & Grow',
+      description: 'Watch real-time insights, reduce costs, and improve operations from day one.',
+      Icon: TrendingUp,
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-white text-neutral-900 selection:bg-primary-500/30">
+    <div className="min-h-screen bg-white">
       <Navigation />
 
-      <main id="features">
-        {/* Hero */}
-        <section className="pt-32 pb-16 md:pt-40 md:pb-20 bg-white relative overflow-hidden">
-          {/* Premium Mesh Gradients */}
-          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none" aria-hidden="true">
-            <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.3, 0.5, 0.3],
-                x: [0, 50, 0],
-                y: [0, -30, 0]
-              }}
-              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-[20%] -left-[10%] w-[60%] h-[70%] bg-emerald-100/40 rounded-full blur-[120px]"
-            />
-            <motion.div
-              animate={{
-                scale: [1.2, 1, 1.2],
-                opacity: [0.2, 0.4, 0.2],
-                x: [0, -40, 0],
-                y: [0, 60, 0]
-              }}
-              transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-              className="absolute top-[10%] -right-[10%] w-[50%] h-[60%] bg-primary-100/30 rounded-full blur-[100px]"
-            />
+      <section className="features-page">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="features-page__intro"
+          >
+            <p className="features-page__eyebrow">
+              <Sparkles size={14} aria-hidden />
+              Next-Gen Business OS
+            </p>
+            <h1>
+              The Intelligent Operating System for Your Business
+            </h1>
+            <p className="features-page__lede">
+              Automate operations, unify scattered tools into one execution hub, and empower your team
+              through WhatsApp.
+            </p>
+          </motion.div>
+
+          <div className="features-page__values">
+            {valueProps.map((prop, index) => (
+              <motion.div
+                key={prop.text}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 * index }}
+                className="features-page__value"
+              >
+                <span className="features-page__value-icon">
+                  <prop.Icon size={18} aria-hidden />
+                </span>
+                <p>{prop.text}</p>
+              </motion.div>
+            ))}
           </div>
 
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMDAwMDA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20" aria-hidden="true" />
-
-          <div className="container-custom max-w-6xl relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="max-w-5xl mx-auto text-center"
-            >
-              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-primary-200 text-primary-700 px-4 py-2 rounded-full mb-6 text-xs font-bold uppercase tracking-widest shadow-sm">
-                <Sparkles size={14} className="text-primary-600" />
-                <span>Next-Gen Restaurant OS</span>
-              </div>
-
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black mb-6 leading-tight tracking-tighter text-neutral-900">
-                The <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 via-emerald-500 to-primary-600 animate-gradient-x">Intelligent Operating System</span> for Your Restaurant
-              </h1>
-              <p className="text-base md:text-lg text-neutral-600 mb-10 leading-relaxed max-w-3xl mx-auto">
-                Centralize operations, empower your team, and boost profits with an AI assistant manager that works through WhatsApp.
-              </p>
-
-              {/* Core Value Props */}
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-                {valueProps.map((prop, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 + 0.3 }}
-                    className="bg-white rounded-xl p-4 border border-neutral-200 shadow-sm hover:shadow-md hover:border-primary-200 transition-all duration-300"
-                  >
-                    <div className="flex items-start space-x-3 leading-5">
-                      <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center flex-shrink-0 text-xl">
-                        {prop.emoji}
-                      </div>
-                      <p className="text-xs text-neutral-700 text-left font-medium">{prop.text}</p>
+          <div className="features-page__grid">
+            {featureSections.map((section, sectionIndex) => (
+              <motion.article
+                key={section.category}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: Math.min(sectionIndex * 0.05, 0.2) }}
+                className={`features-block features-block--${section.accent}`}
+              >
+                <div className="features-block__top">
+                  <div className="features-block__copy">
+                    <div className="features-block__title-row">
+                      <span className="features-block__icon">
+                        <section.Icon size={22} aria-hidden />
+                      </span>
+                      <h2>{section.category}</h2>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Platform Features - Owner & Staff */}
-        <section className="py-20 md:py-32 bg-white relative overflow-hidden">
-          <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-emerald-50 rounded-full blur-[100px] opacity-60" />
-          <div className="absolute top-1/2 right-0 -translate-y-1/2 w-64 h-64 bg-amber-50 rounded-full blur-[100px] opacity-60" />
-          <div className="container-custom max-w-7xl relative z-10">
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch">
-              {combinedFeatures.map((section, sectionIndex) => (
-                <motion.div
-                  key={sectionIndex}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: sectionIndex * 0.1, duration: 0.6 }}
-                  className="bg-neutral-50/50 rounded-3xl p-6 lg:p-8 border border-neutral-100 shadow-sm min-w-0 h-full flex flex-col"
-                >
-                  <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8 mb-8">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className={`w-12 h-12 ${section.accentColor === 'amber' ? 'bg-amber-100' : 'bg-emerald-100'} rounded-xl flex items-center justify-center flex-shrink-0 ${'icon' in section && section.icon ? '' : 'text-2xl'}`}>
-                          {'icon' in section && section.icon ? (
-                            <section.icon className={section.accentColor === 'amber' ? 'text-amber-600' : 'text-emerald-600'} size={24} />
-                          ) : (
-                            section.emoji
-                          )}
-                        </div>
-                        <h3 className="text-xl font-black text-neutral-900 tracking-tight">{section.category}</h3>
-                      </div>
-                      <p className="text-base text-neutral-600 leading-relaxed mb-4">{section.description}</p>
-                    </div>
-                    <div className="flex-1 w-full mx-auto lg:mx-0" style={{ maxWidth: '300px' }}>
-                      <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-neutral-900/10 border border-white/50 bg-white group/img backdrop-blur-sm">
-                          <div className="absolute inset-0 bg-gradient-to-tr from-primary-500/10 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-500" />
-                          <img
-                            src={section.image}
-                            alt={section.category}
-                            className="w-full h-auto object-cover hover:scale-110 transition-transform duration-700 ease-out p-1"
-                          />
-                      </div>
-                    </div>
+                    <p>{section.description}</p>
                   </div>
-
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    className={`bg-white rounded-xl p-4 border border-neutral-200/80 shadow-sm flex-1 ${
-                      section.accentColor === 'amber' ? 'hover:border-amber-300' : 'hover:border-emerald-300'
-                    } transition-colors duration-300`}
-                  >
-                    <div className="space-y-3">
-                      {section.features.map((feature, featureIndex) => (
-                        <div key={featureIndex} className="flex items-start gap-2.5">
-                          <div className={`w-5 h-5 flex-shrink-0 rounded-full flex items-center justify-center mt-0.5 ${
-                            section.accentColor === 'amber' ? 'bg-amber-100' : 'bg-emerald-100'
-                          }`}>
-                            <CheckCircle className={
-                              section.accentColor === 'amber' ? 'text-amber-600' : 'text-emerald-600'
-                            } size={10} />
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <h4 className="font-bold text-neutral-900 text-sm leading-tight">{feature.name}</h4>
-                            <p className="text-neutral-500 text-xs leading-relaxed">{feature.description}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* How It Works */}
-        <section className="pt-30 pb-20 md:pt-40 md:pb-30 bg-white text-neutral-900 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(0,217,143,0.06),transparent_70%)]" aria-hidden="true" />
-
-          <div className="container-custom max-w-6xl relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-20"
-            >
-              <h2 className="text-2xl md:text-3xl font-black text-neutral-900 mb-4 tracking-tight">
-                How It Works
-              </h2>
-              <p className="text-base text-neutral-600 max-w-2xl mx-auto">
-                Get started with Mizan in three simple steps
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-3 gap-8 md:gap-10 relative items-stretch">
-              <div className="hidden md:block absolute top-[60px] left-0 right-0 h-0.5 bg-primary-200 pointer-events-none" />
-
-              {[
-                {
-                  step: '1',
-                  title: 'Connect Your Systems',
-                  description: 'Link your POS, payroll, and existing tools. Our team handles the setup.',
-                  emoji: '🔌',
-                },
-                {
-                  step: '2',
-                  title: 'Onboard Your Team',
-                  description: 'Staff receive WhatsApp invites and start using Mizan immediately. Zero training needed.',
-                  emoji: '👥',
-                },
-                {
-                  step: '3',
-                  title: 'Optimize & Grow',
-                  description: 'Watch real-time insights, reduce costs, and improve operations from day one.',
-                  emoji: '🚀',
-                },
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="relative h-full flex"
-                >
-                  <div className="relative w-full h-full bg-neutral-50 rounded-2xl p-6 md:p-8 border border-neutral-200 hover:border-primary-300 hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center">
-                    <div className="w-10 h-10 bg-primary-600 text-white rounded-full flex items-center justify-center text-base font-black mb-4">
-                      {item.step}
-                    </div>
-                    <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4 text-2xl">
-                      {item.emoji}
-                    </div>
-                    <h3 className="text-base font-bold text-neutral-900 mb-3 tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-neutral-600 text-xs leading-relaxed flex-1">
-                      {item.description}
-                    </p>
+                  <div className="features-block__media">
+                    <img src={section.image} alt="" />
                   </div>
-                </motion.div>
-              ))}
-            </div>
+                </div>
+
+                <ul className="features-block__list">
+                  {section.features.map((feature) => (
+                    <li key={feature.name}>
+                      <CheckCircle size={16} aria-hidden />
+                      <div>
+                        <strong>{feature.name}</strong>
+                        <span>{feature.description}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </motion.article>
+            ))}
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      <section className="features-steps">
+        <div className="container-custom">
+          <div className="features-steps__intro">
+            <h2>How it works</h2>
+            <p>Get started with Mizan in three simple steps</p>
+          </div>
+
+          <div className="features-steps__grid">
+            {steps.map((item, index) => (
+              <motion.div
+                key={item.step}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08 }}
+                className="features-steps__card"
+              >
+                <span className="features-steps__num">{item.step}</span>
+                <span className="features-steps__icon">
+                  <item.Icon size={22} aria-hidden />
+                </span>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="features-cta">
+        <div className="container-custom">
+          <div className="features-cta__inner">
+            <div>
+              <h2>See Mizan in action</h2>
+              <p>Book a demo and we'll walk you through the OS built for your operations.</p>
+            </div>
+            <a
+              href={CALENDLY_DEMO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="features-cta__btn"
+            >
+              Book a demo
+              <ArrowRight size={18} />
+            </a>
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>

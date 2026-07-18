@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "@remix-run/react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { CALENDLY_DEMO_URL } from "../lib/links";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -62,12 +63,14 @@ export function Header() {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link
-              to="/contact"
+            <a
+              href={CALENDLY_DEMO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-4 py-2 text-neutral-700 hover:text-[var(--color-primary)] transition-colors"
             >
               Book Demo
-            </Link>
+            </a>
             <Link
               to="/signup"
               className="px-6 py-2.5 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-primary-light)] transition-all duration-300 hover:shadow-lg"
@@ -107,13 +110,15 @@ export function Header() {
                 </Link>
               ))}
               <div className="pt-4 space-y-2">
-                <Link
-                  to="/contact"
+                <a
+                  href={CALENDLY_DEMO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="block w-full px-4 py-2.5 text-center border border-[var(--color-primary)] text-[var(--color-primary)] rounded-lg hover:bg-neutral-50 transition-colors"
                 >
                   Book Demo
-                </Link>
+                </a>
                 <Link
                   to="/signup"
                   onClick={() => setIsMobileMenuOpen(false)}

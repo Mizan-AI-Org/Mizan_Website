@@ -16,7 +16,7 @@ export default function Pricing() {
   const plans = [
     {
       name: 'Starter',
-      description: 'Perfect for single-location restaurants getting started',
+      description: 'Perfect for single-location businesses getting started',
       monthlyPrice: 99,
       annualPrice: 89,
       maxEmployees: 15,
@@ -39,13 +39,13 @@ export default function Pricing() {
     },
     {
       name: 'Pro',
-      description: 'For growing restaurants that need insights and control',
+      description: 'For growing businesses that need insights and control',
       monthlyPrice: 189,
       annualPrice: 169,
       maxEmployees: 50,
       employeeLabel: 'Up to 50 employees',
       features: [
-        'Everything in Essential',
+        'Everything in Starter',
         'Advanced Labor Analytics',
         'Performance & Sales Integration',
         'Forecast-Based Scheduling',
@@ -62,7 +62,7 @@ export default function Pricing() {
     },
     {
       name: 'Enterprise',
-      description: 'For multi-location restaurant groups & franchises',
+      description: 'For multi-location groups & franchises',
       monthlyPrice: null,
       annualPrice: null,
       maxEmployees: null,
@@ -120,7 +120,7 @@ export default function Pricing() {
     },
     {
       question: 'What kind of support is included?',
-      answer: 'All plans include email support. Professional and Enterprise plans get priority support with faster response times. Enterprise customers get a dedicated account manager.',
+      answer: 'All plans include email support. Pro and Enterprise plans get priority support with faster response times. Enterprise customers get a dedicated account manager.',
     },
     {
       question: 'How does Mizan AI help with staff scheduling?',
@@ -135,8 +135,8 @@ export default function Pricing() {
       answer: 'Staff can report incidents through voice notes or text via WhatsApp. The AI transcribes, categorizes, and creates tickets automatically on your manager dashboard for review and action.',
     },
     {
-      question: 'How secure is my restaurant data?',
-      answer: 'We take security seriously. All data is encrypted in transit and at rest, and we comply with industry-standard security practices to protect your restaurant information.',
+      question: 'How secure is my business data?',
+      answer: 'We take security seriously. All data is encrypted in transit and at rest, and we comply with industry-standard security practices to protect your business information.',
     },
   ];
 
@@ -144,52 +144,38 @@ export default function Pricing() {
     <div className="min-h-screen bg-white">
       <Navigation />
 
-      {/* Hero */}
-      <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-br from-neutral-50 to-primary-50/30">
-        <div className="container-custom text-center">
+      <section className="pricing-page">
+        <div className="container-custom">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
+            className="pricing-page__intro"
           >
-            <h1 className="text-neutral-900 mb-6">
-              Simple, transparent pricing
-            </h1>
-            <p className="text-xl text-neutral-600 max-w-3xl mx-auto mb-8">
-              Choose the plan that's right for your restaurant. Start with a 14-day free trial.
+            <h1>Simple, transparent pricing</h1>
+            <p>
+              Choose the plan that's right for your business. Start with a 14-day free trial.
             </p>
 
-            {/* Billing Toggle */}
-            <div className="inline-flex items-center bg-white rounded-lg p-1 shadow-sm">
+            <div className="pricing-toggle" role="group" aria-label="Billing cycle">
               <button
+                type="button"
                 onClick={() => setBillingCycle('monthly')}
-                className={`px-6 py-2 rounded-md transition-colors ${billingCycle === 'monthly'
-                  ? 'bg-primary-600 text-white'
-                  : 'text-neutral-600 hover:text-neutral-900'
-                  }`}
+                className={billingCycle === 'monthly' ? 'is-active' : ''}
               >
                 Monthly
               </button>
               <button
+                type="button"
                 onClick={() => setBillingCycle('annual')}
-                className={`px-6 py-2 rounded-md transition-colors ${billingCycle === 'annual'
-                  ? 'bg-primary-600 text-white'
-                  : 'text-neutral-600 hover:text-neutral-900'
-                  }`}
+                className={billingCycle === 'annual' ? 'is-active' : ''}
               >
                 Annual
-                <span className="ml-2 text-xs bg-secondary-100 text-secondary-700 px-2 py-1 rounded">
-                  Save 15%
-                </span>
+                <span className="pricing-toggle__save">Save 15%</span>
               </button>
             </div>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Pricing Cards */}
-      <section className="pt-3 pb-5 bg-white">
-        <div className="container-custom">
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="pricing-plans__grid">
             {plans.map((plan, index) => {
               const price = getPrice(plan);
               const isRecommended = plan.recommended;
@@ -201,76 +187,56 @@ export default function Pricing() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className={`bg-white rounded-2xl p-8 relative ${isRecommended
-                    ? 'border-2 border-primary-600 shadow-xl'
-                    : 'border border-neutral-200'
-                    }`}
+                  className={`pricing-card ${isRecommended ? 'pricing-card--featured' : ''}`}
                 >
                   {isRecommended && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-600 text-white px-4 py-1 rounded-full text-sm font-medium">
-                      ⭐ Most Popular
-                    </div>
+                    <div className="pricing-card__badge">Most Popular</div>
                   )}
 
-                  <div className="mb-6">
-                    <h3 className="text-neutral-900 mb-2">{plan.name}</h3>
-                    <p className="text-neutral-600 text-sm">{plan.description}</p>
+                  <div className="pricing-card__head">
+                    <h3>{plan.name}</h3>
+                    <p>{plan.description}</p>
                   </div>
 
-                  <div className="mb-6">
+                  <div className="pricing-card__price">
                     {price !== null ? (
                       <>
-                        <div className="flex items-baseline">
-                          <span className="text-5xl font-bold text-neutral-900">
-                            ${price}
-                          </span>
-                          <span className="text-neutral-600 ml-2">/month</span>
+                        <div className="pricing-card__amount">
+                          <span className="pricing-card__dollars">${price}</span>
+                          <span className="pricing-card__period">/month</span>
                         </div>
                         {billingCycle === 'annual' && (
-                          <p className="text-sm text-neutral-500 mt-2">
-                            Billed annually
-                          </p>
+                          <p className="pricing-card__billed">Billed annually</p>
                         )}
-                        <p className="text-sm text-primary-600 font-medium mt-2">
-                          {plan.employeeLabel}
-                        </p>
+                        <p className="pricing-card__seats">{plan.employeeLabel}</p>
                       </>
                     ) : (
                       <div>
-                        <div className="text-3xl font-bold text-neutral-900 mb-2">
-                          Custom Pricing
-                        </div>
-                        <p className="text-neutral-600 text-sm">
-                          Tailored to your operations
-                        </p>
-                        <p className="text-sm text-primary-600 font-medium mt-2">
-                          {plan.employeeLabel}
-                        </p>
+                        <div className="pricing-card__custom">Custom Pricing</div>
+                        <p className="pricing-card__custom-note">Tailored to your operations</p>
+                        <p className="pricing-card__seats">{plan.employeeLabel}</p>
                       </div>
                     )}
                   </div>
 
                   <a
                     href="#contact"
-                    className={`w-full block text-center py-3 rounded-lg transition-colors mb-6 ${isRecommended
-                      ? 'bg-primary-600 text-white hover:bg-primary-700'
-                      : 'border-2 border-neutral-300 text-neutral-900 hover:border-primary-600'
-                      }`}
+                    className={`pricing-card__cta ${isRecommended ? 'pricing-card__cta--primary' : ''}`}
                   >
                     {price !== null ? 'Start Free Trial' : 'Contact Sales'}
                   </a>
 
-                  <div className="space-y-3">
+                  <div className="pricing-card__features">
                     {plan.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-start space-x-3 leading-5">
-                        <Check className="text-primary-600 flex-shrink-0 mt-0.5" size={20} />
-                        <span className="text-neutral-700">{feature}</span>
+                      <div key={idx} className="pricing-card__feature">
+                        <Check className="pricing-card__check" size={20} />
+                        <span>{feature}</span>
                       </div>
                     ))}
                     {plan.notIncluded.map((feature, idx) => (
-                      <div key={idx} className="flex items-start space-x-3 leading-5 opacity-50">
-                        <X className="text-neutral-400 flex-shrink-0 mt-0.5" size={20} />
-                        <span className="text-neutral-500">{feature}</span>
+                      <div key={idx} className="pricing-card__feature pricing-card__feature--muted">
+                        <X className="pricing-card__x" size={20} />
+                        <span>{feature}</span>
                       </div>
                     ))}
                   </div>
@@ -279,33 +245,29 @@ export default function Pricing() {
             })}
           </div>
 
-          {/* Restaurant Size Recommendations */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-12 bg-neutral-50 rounded-2xl p-8"
+            className="pricing-guide"
           >
-            <h3 className="text-neutral-900 mb-6 text-center">Not sure which plan is right for you?</h3>
+            <h3>Not sure which plan is right for you?</h3>
 
-            <div className="grid md:grid-cols-3 gap-6 text-center">
+            <div className="pricing-guide__grid">
               <div>
-                <div className="text-2xl mb-2">🍽️</div>
-                <h4 className="text-neutral-900 mb-2">Small Restaurant</h4>
-                <p className="text-neutral-600 mb-3">Up to 15 employees</p>
-                <p className="text-primary-600 font-medium">→ Essential Plan</p>
+                <h4>Small Team</h4>
+                <p>Up to 15 employees</p>
+                <span>Starter</span>
               </div>
               <div>
-                <div className="text-2xl mb-2">🏪</div>
-                <h4 className="text-neutral-900 mb-2">Growing Business</h4>
-                <p className="text-neutral-600 mb-3">Up to 50 employees</p>
-                <p className="text-primary-600 font-medium">→ Professional Plan</p>
+                <h4>Growing Business</h4>
+                <p>Up to 50 employees</p>
+                <span>Pro</span>
               </div>
               <div>
-                <div className="text-2xl mb-2">🏢</div>
-                <h4 className="text-neutral-900 mb-2">Restaurant Groups</h4>
-                <p className="text-neutral-600 mb-3">50+ employees or multi-location</p>
-                <p className="text-primary-600 font-medium">→ Enterprise Plan</p>
+                <h4>Multi-Location Groups</h4>
+                <p>50+ employees or multi-location</p>
+                <span>Enterprise</span>
               </div>
             </div>
           </motion.div>

@@ -43,7 +43,7 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2">
             <p className="text-neutral-400 mb-6 max-w-sm">
-              The intelligent restaurant management platform. Streamline operations, empower your team, and boost profitability.
+              The intelligent operating system that automates business operations and unifies scattered tools into one centralized execution hub.
             </p>
             <div className="flex space-x-4">
               <a href="https://www.facebook.com/people/Mizan-AI/61584792668416/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-neutral-400 hover:text-white transition-colors">
@@ -125,7 +125,7 @@ export function Footer() {
               © 2026 Mizan AI. All rights reserved.
             </p>
             <p className="text-neutral-400">
-              Built for restaurant operators, by restaurant technology experts.
+              Built for operators who want one hub to run their business.
             </p>
           </div>
         </div>

@@ -132,7 +132,7 @@ export default function BlogPost() {
 
             <p className="text-neutral-700 mb-6">
               Labor costs typically represent 25-35% of a restaurant's total costs, making it one of your
-              largest expenses. But it's not just about the numbers—poor scheduling affects every aspect
+              largest expenses. But it's not just about the numbers. Poor scheduling affects every aspect
               of your business:
             </p>
 
@@ -269,7 +269,7 @@ export default function BlogPost() {
             <div className="bg-primary-50 border-l-4 border-primary-600 rounded-r-xl p-8 my-12">
               <h3 className="text-neutral-900 mb-4">Key Takeaway</h3>
               <p className="text-neutral-700">
-                Great restaurant scheduling isn't about perfection—it's about having a systematic approach
+                Great restaurant scheduling isn't about perfection. It's about having a systematic approach
                 that balances business needs with employee wellbeing. The restaurants that get this right
                 enjoy lower turnover, better service, and healthier profit margins.
               </p>
