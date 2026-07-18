@@ -1,0 +1,9 @@
+# https://heymizan.ai/robots.txt
+User-agent: *
+Allow: /
+
+# Prefer the public marketing pages
+Disallow: /api/
+Disallow: /*?*utm_
+
+Sitemap: https://heymizan.ai/sitemap.xml

@@ -1,5 +1,5 @@
 import "./styles/globals.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Index from "./routes/_index";
 import Features from "./routes/features";
 import Pricing from "./routes/pricing";
@@ -9,82 +9,83 @@ import CaseStudies from "./routes/case-studies._index";
 import Privacy from "./routes/privacy";
 import Terms from "./routes/terms";
 import { Analytics } from "@vercel/analytics/react";
-import React from "react";
+import { Seo, SiteJsonLd } from "./components/Seo";
+import {
+  breadcrumbJsonLd,
+  pageSeo,
+  defaultSeo,
+} from "./lib/seo";
+import {
+  getRouteFromLocation,
+  migrateLegacyHashRoutes,
+  type AppPage,
+} from "./lib/routing";
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState("home");
+  const [page, setPage] = useState<AppPage>("home");
+  const [subpath, setSubpath] = useState("");
 
   useEffect(() => {
-    // Handle hash and path-based navigation
-    const handleNavigation = () => {
-      const hash = window.location.hash.slice(1);
+    const sync = () => {
+      migrateLegacyHashRoutes();
+      const route = getRouteFromLocation();
+      setPage(route.page);
+      setSubpath(route.subpath);
 
-      // Prefer hash (in-app section/page links), then fallback to path
-      const baseHash = hash.split("/")[0];
-
-      if (baseHash === "features") {
-        setCurrentPage("features");
-      } else if (baseHash === "pricing") {
-        setCurrentPage("pricing");
-      } else if (baseHash === "contact") {
-        setCurrentPage("contact");
-      } else if (baseHash === "case-studies") {
-        setCurrentPage("case-studies");
-      } else if (baseHash === "blog") {
-        setCurrentPage("blog");
-      } else if (baseHash === "privacy") {
-        setCurrentPage("privacy");
-      } else if (baseHash === "terms") {
-        setCurrentPage("terms");
-      } else {
-        setCurrentPage("home");
-      }
-
-      // Scroll to top when switching top-level pages (not between case studies)
-      const isCaseStudyDetail = hash.startsWith("case-studies/");
+      const isCaseStudyDetail =
+        route.page === "case-studies" && Boolean(route.subpath);
       if (!isCaseStudyDetail) {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
     };
 
-    // Check initial navigation
-    handleNavigation();
-
-    // Listen for hash changes (in-app navigation)
-    window.addEventListener("hashchange", handleNavigation);
-
-    return () => {
-      window.removeEventListener("hashchange", handleNavigation);
-    };
+    sync();
+    window.addEventListener("popstate", sync);
+    return () => window.removeEventListener("popstate", sync);
   }, []);
 
-  // Render appropriate page
+  const seo = useMemo(() => {
+    const base = pageSeo[page] ?? defaultSeo;
+    if (page === "case-studies" && subpath) {
+      const pretty = subpath
+        .split("-")
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ");
+      return {
+        ...base,
+        title: `${pretty} Case Study | Mizan AI`,
+        description: `See how ${pretty} uses Mizan AI to automate operations, schedule staff, and run team communication through WhatsApp.`,
+        path: `/case-studies/${subpath}`,
+        type: "article" as const,
+      };
+    }
+    return base;
+  }, [page, subpath]);
+
+  const jsonLd = useMemo(() => {
+    const crumbs = [{ name: "Home", path: "/" }];
+    if (page === "case-studies") {
+      crumbs.push({ name: "Case Studies", path: "/case-studies" });
+      if (subpath) {
+        crumbs.push({
+          name: seo.title.split("|")[0].trim(),
+          path: seo.path,
+        });
+      }
+    } else if (page !== "home") {
+      crumbs.push({ name: seo.title.split("|")[0].trim(), path: seo.path });
+    }
+    return breadcrumbJsonLd(crumbs);
+  }, [page, seo, subpath]);
+
   const renderPage = () => {
-    if (currentPage === "features") {
-      return <Features />;
-    }
-
-    if (currentPage === "pricing") {
-      return <Pricing />;
-    }
-
-    if (currentPage === "contact") {
-      return <Contact />;
-    }
-
-    if (currentPage === "privacy") {
-      return <Privacy />;
-    }
-
-    if (currentPage === "terms") {
-      return <Terms />;
-    }
-
-    if (currentPage === "case-studies") {
-      return <CaseStudies />;
-    }
-
-    if (currentPage === "blog") {
+    if (page === "features") return <Features />;
+    if (page === "pricing") return <Pricing />;
+    if (page === "contact") return <Contact />;
+    if (page === "privacy") return <Privacy />;
+    if (page === "terms") return <Terms />;
+    if (page === "case-studies") return <CaseStudies />;
+    if (page === "blog") {
       return (
         <ComingSoon
           title="Blog Coming Soon"
@@ -92,12 +93,13 @@ export default function App() {
         />
       );
     }
-
     return <Index />;
   };
 
   return (
     <>
+      <SiteJsonLd />
+      <Seo {...seo} jsonLd={jsonLd} />
       {renderPage()}
       <Analytics />
     </>

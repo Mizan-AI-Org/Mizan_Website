@@ -264,7 +264,7 @@ export default function Contact() {
 
                   <p className="contact-form__legal">
                     By submitting this form, you agree to our{' '}
-                    <a href="#privacy">Privacy Policy</a> and <a href="#terms">Terms of Service</a>.
+                    <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms of Service</a>.
                   </p>
                 </form>
               )}

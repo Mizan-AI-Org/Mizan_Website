@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CALENDLY_DEMO_URL } from '../lib/links';
+import { getRouteFromLocation } from '../lib/routing';
 
 function isHomeRoute() {
-  const hash = window.location.hash.replace(/^#/, '');
-  const base = hash.split('/')[0];
-  return base === '' || base === 'home';
+  return getRouteFromLocation().page === 'home';
 }
 
 export function Navigation() {
@@ -21,38 +20,36 @@ export function Navigation() {
     syncRoute();
     onScroll();
 
-    window.addEventListener('hashchange', syncRoute);
+    window.addEventListener('popstate', syncRoute);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
-      window.removeEventListener('hashchange', syncRoute);
+      window.removeEventListener('popstate', syncRoute);
       window.removeEventListener('scroll', onScroll);
     };
   }, []);
 
-  // Transparent white-on-green nav only on the home hero; solid nav everywhere else
   const useHeroNav = isHome && !isScrolled;
 
-  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    window.location.hash = '';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const navLinks = [
-    { name: 'Features', href: '#features' },
-    { name: 'Pricing', href: '#pricing' },
-    { name: 'Case Studies', href: '#case-studies' },
-    { name: 'Blog', href: '#blog' },
+    { name: 'Features', href: '/features' },
+    { name: 'Pricing', href: '/pricing' },
+    { name: 'Case Studies', href: '/case-studies' },
+    { name: 'Blog', href: '/blog' },
   ];
 
   return (
-    <nav className={`site-nav ${useHeroNav ? 'site-nav--top' : 'site-nav--scrolled'}`}>
+    <nav
+      className={`site-nav ${useHeroNav ? 'site-nav--top' : 'site-nav--scrolled'}`}
+      aria-label="Primary"
+    >
       <div className="container-custom">
         <div className="site-nav__inner">
-          <a href="#" className="site-nav__brand" onClick={handleLogoClick}>
+          <a href="/" className="site-nav__brand" aria-label="Mizan AI home">
             <img
               src={useHeroNav ? '/logo-white.png' : '/logo.png'}
-              alt="Mizan"
+              alt="Mizan AI logo"
+              width={36}
+              height={36}
               className="site-nav__logo"
               onError={(e) => {
                 (e.target as HTMLImageElement).src = '/logo.png';
@@ -78,7 +75,7 @@ export function Navigation() {
             >
               Book Demo
             </a>
-            <a href="#contact" className="site-nav__trial">
+            <a href="/contact" className="site-nav__trial">
               Start Free Trial
             </a>
           </div>
@@ -125,7 +122,7 @@ export function Navigation() {
                   Book Demo
                 </a>
                 <a
-                  href="#contact"
+                  href="/contact"
                   className="site-nav__trial"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >

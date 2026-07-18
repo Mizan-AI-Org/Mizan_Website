@@ -5,6 +5,7 @@ import { Navigation } from '../components/Navigation';
 import { Footer } from '../components/Footer';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { CALENDLY_DEMO_URL } from '../lib/links';
+import { getRouteFromLocation, navigate } from '../lib/routing';
 
 type CaseStudy = {
   id: string;
@@ -96,10 +97,11 @@ const caseStudies: CaseStudy[] = [
   },
 ];
 
-function getStudyIdFromHash() {
-  const hash = window.location.hash.replace(/^#/, '');
-  if (hash.startsWith('case-studies/')) {
-    return hash.slice('case-studies/'.length) || caseStudies[0].id;
+function getStudyIdFromLocation() {
+  const { page, subpath } = getRouteFromLocation();
+  if (page === 'case-studies' && subpath) {
+    const match = caseStudies.find((study) => study.id === subpath);
+    return match?.id ?? caseStudies[0].id;
   }
   return caseStudies[0].id;
 }
@@ -108,10 +110,10 @@ export default function CaseStudiesIndex() {
   const [activeId, setActiveId] = useState(caseStudies[0].id);
 
   useEffect(() => {
-    const syncFromHash = () => setActiveId(getStudyIdFromHash());
-    syncFromHash();
-    window.addEventListener('hashchange', syncFromHash);
-    return () => window.removeEventListener('hashchange', syncFromHash);
+    const sync = () => setActiveId(getStudyIdFromLocation());
+    sync();
+    window.addEventListener('popstate', sync);
+    return () => window.removeEventListener('popstate', sync);
   }, []);
 
   const activeStudy = useMemo(
@@ -125,7 +127,7 @@ export default function CaseStudiesIndex() {
 
   const selectStudy = (id: string) => {
     setActiveId(id);
-    window.location.hash = `case-studies/${id}`;
+    navigate(`/case-studies/${id}`);
   };
 
   return (

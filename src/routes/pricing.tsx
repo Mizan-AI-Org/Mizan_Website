@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Check, X, ArrowRight } from 'lucide-react';
 import { Navigation } from '../components/Navigation';
@@ -9,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '../components/ui/accordion';
+import { faqJsonLd } from '../lib/seo';
 
 export default function Pricing() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly');
@@ -140,6 +141,21 @@ export default function Pricing() {
     },
   ];
 
+  useEffect(() => {
+    const id = 'pricing-faq-jsonld';
+    let el = document.getElementById(id) as HTMLScriptElement | null;
+    if (!el) {
+      el = document.createElement('script');
+      el.id = id;
+      el.type = 'application/ld+json';
+      document.head.appendChild(el);
+    }
+    el.textContent = JSON.stringify(faqJsonLd(faqs));
+    return () => {
+      el?.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
@@ -220,7 +236,7 @@ export default function Pricing() {
                   </div>
 
                   <a
-                    href="#contact"
+                    href="/contact"
                     className={`pricing-card__cta ${isRecommended ? 'pricing-card__cta--primary' : ''}`}
                   >
                     {price !== null ? 'Start Free Trial' : 'Contact Sales'}
@@ -336,7 +352,7 @@ export default function Pricing() {
           >
             <p className="text-neutral-600 mb-4">Still have questions?</p>
             <a
-              href="#contact"
+              href="/contact"
               className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700"
             >
               <span>Contact our sales team</span>
@@ -360,7 +376,7 @@ export default function Pricing() {
             </p>
 
             <a
-              href="#contact"
+              href="/contact"
               className="inline-flex items-center space-x-2 bg-white text-primary-600 px-8 py-4 rounded-lg hover:bg-neutral-100 transition-colors"
             >
               <span>Start Free Trial</span>

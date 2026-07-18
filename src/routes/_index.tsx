@@ -173,9 +173,10 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
+      <main id="main-content">
 
       {/* Hero: full-bleed green, text left + floating phone right */}
-      <section className="hero-pattern relative">
+      <section className="hero-pattern relative" aria-label="Hero">
         <div className="container-custom relative z-10 pt-32 pb-44 md:pt-40 md:pb-52 lg:pt-44 lg:pb-56">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-10 lg:gap-16 items-center">
             {/* Left: copy */}
@@ -197,7 +198,7 @@ export default function Index() {
               </p>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                <a href="#contact" className="hero-cta hero-cta-primary">
+                <a href="/contact" className="hero-cta hero-cta-primary">
                   <span>Get Started</span>
                   <ArrowRight size={20} strokeWidth={2.5} className="hero-cta-icon" />
                 </a>
@@ -586,6 +587,7 @@ export default function Index() {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );
